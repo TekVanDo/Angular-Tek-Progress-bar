@@ -1,0 +1,26 @@
+{
+  "name": "progressBar",
+  "version": "0.0.1",
+  "authors": [
+    "Tek <tek@inbox.ru>"
+  ],
+  "description": "angular progress bar",
+  "main": "progressBar.js",
+  "keywords": [
+    "angular",
+    "progress",
+    "bar"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "bootstrap": "~3.3.5"
+  }
+}
