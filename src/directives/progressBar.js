@@ -9,26 +9,33 @@
                 value: "="
             },
             restrict: "E",
+            transclude: true,
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
-                var barContainer = angular.element($element.find('div')[1]); //todo fix
-                var value = 0;
-
-                var setBar = function (val) {
-                    value = val;
-                    barContainer.css('width',val +'%');
-                    //barContainer.removeClass('no-transition');
-                };
-
-                var resetBar = function () {
-                    //barContainer.addClass('no-transition');
-                    barContainer.css('display','none');
-                    setBar(0);
-                    barContainer.css('display','block');
-                };
-
 
                 bar.progressObj = (function () {
+                    var barContainer = angular.element($element.find('div')[1]); //todo fix
+                    var value = 0;
+
+                    var setBar = function (val) {
+                        checkAnimation();
+                        value = val;
+                        barContainer.css('width', val + '%');
+                    };
+
+                    var clearAnimation = function () {
+                        barContainer.css('transition', 'none');
+                    };
+
+                    var setAnimation = function () {
+                        barContainer.css('transition', 'width 0.6s ease 0s');
+                    };
+
+                    var checkAnimation = function () {
+                        console.log(bar.control.isAnimated());
+                        (bar.control.isAnimated()) ? setAnimation() : clearAnimation();
+                    };
+
                     return {
                         get: function () {
                             return value;
@@ -37,31 +44,34 @@
                             setBar(newVal);
                         },
                         reset: function () {
-                            resetBar();
+                            setBar(0);
                         },
                         done: function () {
                             this.set(100)
+                        },
+                        updateAnimation: function () {
+                            checkAnimation();
                         }
                     };
                 }());
 
                 bar.init = function () {
-                    if(bar.control){
-                        bar.control.getDefer().resolve(bar.progressObj);
-                    }else{
-                        $scope.$watch('bar.value',function (newVal) {
+                    if (bar.control) {
+                        bar.control.__getDefer().resolve(bar.progressObj);
+                    } else {
+                        $scope.$watch('bar.value', function (newVal) {
                             setBar(newVal);
                         });
                     }
                 };
                 bar.init();
 
-                $scope.$on('$destroy', function() {
-                    bar.control.updateDefer(bar.value);
+                $scope.$on('$destroy', function () {
+                    bar.control.__updateDefer(bar.value);
                 });
             }],
             controllerAs: "bar",
-            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}'></div>!{{::bar.containerClass}}!</div>",
+            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}' ng-transclude></div></div>",
             bindToController: true
         }
     });

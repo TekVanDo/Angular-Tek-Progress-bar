@@ -9,6 +9,7 @@
 
             main.isBar = false;
             main.val = 0;
+            main.valBar = 0;
 
             main.bar = progressBarParams();
 
@@ -36,10 +37,18 @@
             main.stop = function () {
                 main.bar.stop();
             };
-            //main.instacef = main.bar.getInstance().then(function () {
-            //    main.bar.set(20);
-            //});
 
+            main.clear = function () {
+                main.bar.clear();
+            };
+
+            main.toggleAnimation = function () {
+                main.bar.setAnimation(!main.bar.isAnimated());
+            };
+
+            main.get = function () {
+                main.valBar = main.bar.get();
+            };
         }
     ]);
 }());

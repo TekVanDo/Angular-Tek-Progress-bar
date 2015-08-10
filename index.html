@@ -7,16 +7,22 @@
     <link rel="stylesheet" href="/src/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
-<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar"></progress-bar> test mocha
+<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar> test mocha
 <button ng-click="main.upd()">test</button> {{main.val}}
 <button ng-click="main.isBar = !main.isBar">toggle</button>
 <button ng-click="main.setRand()">setRand</button>
 
 <button ng-click="main.reset()">reset</button>
+<button ng-click="main.clear()">clear</button>
 <button ng-click="main.start()">start</button>
 <button ng-click="main.stop()">stop</button>
 <button ng-click="main.done()">done</button>
 <button ng-click="main.increase()">Increase</button>
+<button ng-click="main.toggleAnimation()">toggleAnimation</button>
+<button ng-click="main.get()">Get</button>
+<input type="text" ng-model="main.valBar">
+
+
 
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="src/progressBarModule.js"></script>
