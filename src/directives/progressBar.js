@@ -6,73 +6,74 @@
                 control: "=",
                 containerClass: "@class",
                 barClass: "@",
+                successClass: "@",
+
                 value: "="
             },
             restrict: "E",
             transclude: true,
+            controllerAs: "bar",
+            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}' ng-transclude></div></div>",
+            bindToController: true,
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
+                var barElement = angular.element($element.find('div')[1]);
 
-                bar.progressObj = (function () {
-                    var barContainer = angular.element($element.find('div')[1]); //todo fix
-                    var value = 0;
+                function ProgressObj(barContainer) {
+                    this.barContainer = barContainer;
+                    this.value = 0;
+                }
 
-                    var setBar = function (val) {
-                        checkAnimation();
-                        value = val;
-                        barContainer.css('width', val + '%');
-                    };
+                ProgressObj.prototype.get = function () {
+                  return this.value;
+                };
 
-                    var clearAnimation = function () {
-                        barContainer.css('transition', 'none');
-                    };
+                ProgressObj.prototype.set = function (val) {
+                    this.value = val;
+                    console.log(this.barContainer);
+                    this.barContainer.css('width', val + '%');
+                    this.barContainer[0].offsetHeight;
+                };
 
-                    var setAnimation = function () {
-                        barContainer.css('transition', 'width 0.6s ease 0s');
-                    };
-
-                    var checkAnimation = function () {
-                        console.log(bar.control.isAnimated());
-                        (bar.control.isAnimated()) ? setAnimation() : clearAnimation();
-                    };
-
-                    return {
-                        get: function () {
-                            return value;
-                        },
-                        set: function (newVal) {
-                            setBar(newVal);
-                        },
-                        reset: function () {
-                            setBar(0);
-                        },
-                        done: function () {
-                            this.set(100)
-                        },
-                        updateAnimation: function () {
-                            checkAnimation();
-                        }
-                    };
-                }());
+                ProgressObj.prototype.setAnimation = function (val) {
+                    (val) ? this.barContainer.css('transition', 'width 0.6s ease 0s') : this.barContainer.css('transition', 'none');
+                };
 
                 bar.init = function () {
+                    bar.progressObj = new ProgressObj(barElement);
+
+                    var facade  = {
+                        get: function () {
+                            return bar.progressObj.get();
+                        },
+                        set: function (newVal) {
+                            bar.progressObj.set(newVal);
+                        },
+                        reset: function () {
+                            bar.progressObj.set(0);
+                        },
+                        done: function () {
+                            bar.progressObj.set(100);
+                        },
+                        updateAnimation: function (val) {
+                            bar.progressObj.setAnimation(val);
+                        }
+                    };
+
                     if (bar.control) {
-                        bar.control.__getDefer().resolve(bar.progressObj);
-                    } else {
+                        bar.control._getDefer().resolve(facade);
+
+                        $scope.$on('$destroy', function () {
+                            bar.control._updateDefer();
+                        });
+                    }else{
                         $scope.$watch('bar.value', function (newVal) {
-                            setBar(newVal);
+                            bar.progressObj.set(newVal);
                         });
                     }
                 };
                 bar.init();
-
-                $scope.$on('$destroy', function () {
-                    bar.control.__updateDefer(bar.value);
-                });
-            }],
-            controllerAs: "bar",
-            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}' ng-transclude></div></div>",
-            bindToController: true
+            }]
         }
     });
 }());

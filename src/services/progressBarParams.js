@@ -32,12 +32,15 @@
 
                 var interval = null;
                 return {
+                    increment: function () {
+                        if (instance) {
+                            obj.set(progressIncrementation(lastVal));
+                        }
+                    },
                     setInterval: function () {
                         if(!interval) {
                             interval = setInterval(function () {
-                                if (instance) {
-                                    obj.set(progressIncrementation(obj.get()));
-                                }
+                                this.increment();
                             }, 300);
                         }
                     },
@@ -64,11 +67,22 @@
                 }
             };
 
+            function defferedCall(name) {
+                var arg = arguments;
+                if(!instance){
+                    deferred.promise.then(function (data) {
+                        return data[name].apply(data, arg);
+                    });
+                }else{
+                    return instance[name].apply(instance, arg);
+                }
+            }
+
             var obj = {
-                __getDefer: function () {
+                _getDefer: function () {
                     return deferred;
                 },
-                __updateDefer: function () {
+                _updateDefer: function () {
                     deferred = $q.defer();
                     instance = null;
                     deferred.promise.then(function (data) {
@@ -104,12 +118,12 @@
                     this.stop();
                     this.setAnimation(false);
                     this.reset();
-                    this.setAnimation(anim);
+                    //this.setAnimation(anim);
                 },
                 setAnimation: function (val) {
                     animation = !!val;
                     deferred.promise.then(function (data) {
-                        data.updateAnimation();
+                        data.updateAnimation(animation);
                     });
                     return obj;
                 },
@@ -122,7 +136,7 @@
                 obj[one] = makeAsyncCall(one);
             });
 
-            obj.__updateDefer(0);
+            obj._updateDefer(0);
 
             return obj;
         }
