@@ -34,13 +34,15 @@
                 return {
                     increment: function () {
                         if (instance) {
+                            console.log(progressIncrementation(lastVal));
                             obj.set(progressIncrementation(lastVal));
                         }
                     },
                     setInterval: function () {
+                        var self = this;
                         if(!interval) {
                             interval = setInterval(function () {
-                                this.increment();
+                                self.increment();
                             }, 300);
                         }
                     },
@@ -99,6 +101,10 @@
                     });
                     return obj;
                 },
+                increase: function () {
+                    intervalCont.increment();
+                    return obj;
+                },
                 get: function () {
                     return lastVal;
                 },
@@ -117,8 +123,12 @@
                     var anim = this.isAnimated();
                     this.stop();
                     this.setAnimation(false);
+                    var self = this;
                     this.reset();
-                    //this.setAnimation(anim);
+                    requestAnimationFrame(function () {
+                        self.setAnimation(anim);
+                    });
+                    return obj;
                 },
                 setAnimation: function (val) {
                     animation = !!val;

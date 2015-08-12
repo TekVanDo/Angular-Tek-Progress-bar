@@ -30,9 +30,9 @@
 
                 ProgressObj.prototype.set = function (val) {
                     this.value = val;
-                    console.log(this.barContainer);
                     this.barContainer.css('width', val + '%');
-                    this.barContainer[0].offsetHeight;
+                    window.getComputedStyle(this.barContainer[0]).opacity;
+                    //.offsetHeight;
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {

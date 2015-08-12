@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/examples/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
-<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar> test mocha
-<button ng-click="main.upd()">test</button> {{main.val}}
+<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar>
+
 <button ng-click="main.isBar = !main.isBar">toggle</button>
 <button ng-click="main.setRand()">setRand</button>
 
@@ -17,17 +17,19 @@
 <button ng-click="main.start()">start</button>
 <button ng-click="main.stop()">stop</button>
 <button ng-click="main.done()">done</button>
-<button ng-click="main.increase()">Increase</button>
+
 <button ng-click="main.toggleAnimation()">toggleAnimation</button>
+
+<input type="number" ng-model="main.valBar">
+<button ng-click="main.increase()">Increase</button>
 <button ng-click="main.get()">Get</button>
-<input type="text" ng-model="main.valBar">
+<button ng-click="main.set()">Set</button>
 
 
-
-<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular/angular.js"></script>
 <script src="src/progressBarModule.js"></script>
 <script src="src/directives/progressBar.js"></script>
 <script src="src/services/progressBarParams.js"></script>
-<script src="examples/controllers/mainController.js"></script>
+<script src="examples/mainController.js"></script>
 </body>
 </html>

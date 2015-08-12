@@ -8,15 +8,9 @@
             var main = this;
 
             main.isBar = false;
-            main.val = 0;
             main.valBar = 0;
 
             main.bar = progressBarParams();
-
-            main.upd = function () {
-                main.val++;
-                return main.bar.set(main.val);
-            };
 
             main.setRand = function () {
                 var rand = Math.floor(Math.random() * 100);
@@ -48,6 +42,14 @@
 
             main.get = function () {
                 main.valBar = main.bar.get();
+            };
+
+            main.set = function () {
+                main.bar.set(main.valBar);
+            };
+
+            main.increase = function () {
+                main.bar.increase();
             };
         }
     ]);
