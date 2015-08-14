@@ -7,7 +7,6 @@
                 containerClass: "@class",
                 barClass: "@",
                 successClass: "@",
-
                 value: "="
             },
             restrict: "E",
@@ -18,6 +17,10 @@
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
                 var barElement = angular.element($element.find('div')[1]);
+                var settings = {
+                    fullClass: 'full-bar',
+                    emptyClass: 'empty-bar'
+                };
 
                 function ProgressObj(barContainer) {
                     this.barContainer = barContainer;
@@ -31,8 +34,22 @@
                 ProgressObj.prototype.set = function (val) {
                     this.value = val;
                     this.barContainer.css('width', val + '%');
-                    window.getComputedStyle(this.barContainer[0]).opacity;
-                    //.offsetHeight;
+                    this.updateClasses();
+                };
+
+                ProgressObj.prototype.updateClasses = function () {
+                    if(this.value === 0){
+                        this.barContainer.removeClass(settings.fullClass);
+                        return this.barContainer.addClass(settings.emptyClass);
+                    }
+
+                    if(this.value === 100){
+                        this.barContainer.removeClass(settings.emptyClass);
+                        return this.barContainer.addClass(settings.fullClass);
+                    }
+
+                    this.barContainer.removeClass(settings.fullClass);
+                    this.barContainer.removeClass(settings.emptyClass);
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {
@@ -48,12 +65,6 @@
                         },
                         set: function (newVal) {
                             bar.progressObj.set(newVal);
-                        },
-                        reset: function () {
-                            bar.progressObj.set(0);
-                        },
-                        done: function () {
-                            bar.progressObj.set(100);
                         },
                         updateAnimation: function (val) {
                             bar.progressObj.setAnimation(val);

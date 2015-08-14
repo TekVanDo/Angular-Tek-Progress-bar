@@ -6,7 +6,6 @@
             var instance = null;
             var lastVal = 0;
             var animation = true;
-            var methods = ['reset','done'];
 
             var intervalCont = (function(){
                 var progressIncrementation = function (stat) {
@@ -34,7 +33,6 @@
                 return {
                     increment: function () {
                         if (instance) {
-                            console.log(progressIncrementation(lastVal));
                             obj.set(progressIncrementation(lastVal));
                         }
                     },
@@ -55,30 +53,6 @@
                     }
                 };
             }());
-
-            var makeAsyncCall = function (name) {
-                return function () {
-                    var arg = arguments;
-                    if(!instance){
-                        deferred.promise.then(function (data) {
-                            return data[name].apply(data, arg);
-                        });
-                    }else{
-                        return instance[name].apply(instance, arg);
-                    }
-                }
-            };
-
-            function defferedCall(name) {
-                var arg = arguments;
-                if(!instance){
-                    deferred.promise.then(function (data) {
-                        return data[name].apply(data, arg);
-                    });
-                }else{
-                    return instance[name].apply(instance, arg);
-                }
-            }
 
             var obj = {
                 _getDefer: function () {
@@ -101,12 +75,15 @@
                     });
                     return obj;
                 },
+                get: function () {
+                    return lastVal;
+                },
+                isInProgress: function () {
+                    return intervalCont.isInProgress();
+                },
                 increase: function () {
                     intervalCont.increment();
                     return obj;
-                },
-                get: function () {
-                    return lastVal;
                 },
                 start: function () {
                     intervalCont.setInterval();
@@ -116,8 +93,13 @@
                     intervalCont.clearInterval();
                     return obj;
                 },
-                isInProgress: function () {
-                    return intervalCont.isInProgress();
+                done: function () {
+                    this.stop();
+                    this.set(100);
+                },
+                reset: function () {
+                    this.stop();
+                    this.set(0);
                 },
                 clear: function () {
                     var anim = this.isAnimated();
@@ -141,10 +123,6 @@
                     return animation;
                 }
             };
-
-            methods.forEach(function (one) {
-                obj[one] = makeAsyncCall(one);
-            });
 
             obj._updateDefer(0);
 
