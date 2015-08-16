@@ -15,7 +15,10 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             './bower_components/angular/angular.js',
-            './src/**/*.js',
+            './bower_components/angular-mocks/angular-mocks.js',
+            './src/progressBarModule.js',
+            './src/services/progressBarParams.js',
+            './src/directives/progressBar.js',
             './test/**/*.js'
         ],
 
@@ -54,7 +57,9 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Firefox', 'PhantomJS'],
+        //browsers: ['Firefox', 'PhantomJS'],
+        browsers: ['PhantomJS'],
+
 
 
         // Continuous Integration mode

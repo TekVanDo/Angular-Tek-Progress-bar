@@ -1,13 +1,25 @@
 (function () {
     "use strict";
-    angular.module('Tek.progressBar').factory('progressBarParams',['$q',function ($q) {
-        return function (defaultSettings){
+    var requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (/* function */ callback, /* DOMElement */ element) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+    })();
+
+    angular.module('Tek.progressBar').factory('progressBarParams', ['$q', function ($q) {
+        return function (defaultSettings) {
             var deferred = $q.defer();
             var instance = null;
             var lastVal = 0;
             var animation = true;
+            var requairedClear = false;
 
-            var intervalCont = (function(){
+            var intervalCont = (function () {
                 var progressIncrementation = function (stat) {
                     var rnd = 0;
                     if (stat >= 0 && stat < 25) {
@@ -32,13 +44,11 @@
                 var interval = null;
                 return {
                     increment: function () {
-                        if (instance) {
-                            obj.set(progressIncrementation(lastVal));
-                        }
+                        obj.set(progressIncrementation(lastVal));
                     },
                     setInterval: function () {
                         var self = this;
-                        if(!interval) {
+                        if (!interval) {
                             interval = setInterval(function () {
                                 self.increment();
                             }, 300);
@@ -63,16 +73,32 @@
                     instance = null;
                     deferred.promise.then(function (data) {
                         instance = data;
-                        if(lastVal){
+                        if (lastVal) {
                             instance.set(lastVal);
                         }
                     });
                 },
                 set: function (val) {
+                    //todo rewrite
+                    if(requairedClear){
+                        requairedClear = false;
+                        this.clear();
+                    }
+
+                    //Checking value is number and not NaN
+                    if (typeof val !== 'number' || val !== val) {
+                        throw new Error("Wrong value");
+                    }
+                    if (val < 0) {
+                        val = 0;
+                    }
+                    if (val > 100) {
+                        val = 100;
+                    }
                     lastVal = val;
-                    deferred.promise.then(function (data) {
-                        data.set(lastVal);
-                    });
+                    if (instance) {
+                        instance.set(lastVal);
+                    }
                     return obj;
                 },
                 get: function () {
@@ -96,19 +122,20 @@
                 done: function () {
                     this.stop();
                     this.set(100);
+                    requairedClear = true;
                 },
                 reset: function () {
                     this.stop();
                     this.set(0);
                 },
                 clear: function () {
-                    var anim = this.isAnimated();
+                    var self = this;
+                    var animationVal = this.isAnimated();
                     this.stop();
                     this.setAnimation(false);
-                    var self = this;
                     this.reset();
                     requestAnimationFrame(function () {
-                        self.setAnimation(anim);
+                        self.setAnimation(animationVal);
                     });
                     return obj;
                 },
