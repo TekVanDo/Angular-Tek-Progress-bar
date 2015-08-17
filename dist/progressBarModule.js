@@ -1,6 +1,8 @@
 (function () {
     "use strict";
-    angular.module('Tek.progressBar',[]);
+    angular.module('Tek.progressBar', []).run(['$templateCache', function ($templateCache) {
+        $templateCache.put('Tek.progressBarDirective.html', "<div class='progress'><div class='progress-bar' ng-transclude></div></div>");
+    }]);
 }());
 (function () {
     "use strict";
@@ -9,25 +11,28 @@
             scope: {
                 control: "=",
                 containerClass: "@class",
-                barClass: "@",
-                successClass: "@",
+                //barClass: "@",
+                //successClass: "@",
                 value: "="
             },
             restrict: "E",
             transclude: true,
             controllerAs: "bar",
-            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}' ng-transclude></div></div>",
+            templateUrl: "Tek.progressBarDirective.html",
             bindToController: true,
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
-                var barElement = angular.element($element.find('div')[1]);
+
+
                 var settings = {
                     fullClass: 'full-bar',
                     emptyClass: 'empty-bar'
                 };
 
-                function ProgressObj(barContainer) {
-                    this.barContainer = barContainer;
+                function ProgressObj(element) {
+                    var divElements = element.find('div');
+                    this.containerElement = angular.element(divElements[0]);
+                    this.barContainer = angular.element(divElements[1]);
                     this.value = 0;
                 }
 
@@ -43,25 +48,25 @@
 
                 ProgressObj.prototype.updateClasses = function () {
                     if(this.value === 0){
-                        this.barContainer.removeClass(settings.fullClass);
-                        return this.barContainer.addClass(settings.emptyClass);
+                        this.containerElement.removeClass(settings.fullClass);
+                        return this.containerElement.addClass(settings.emptyClass);
                     }
 
                     if(this.value === 100){
-                        this.barContainer.removeClass(settings.emptyClass);
-                        return this.barContainer.addClass(settings.fullClass);
+                        this.containerElement.removeClass(settings.emptyClass);
+                        return this.containerElement.addClass(settings.fullClass);
                     }
 
-                    this.barContainer.removeClass(settings.fullClass);
-                    this.barContainer.removeClass(settings.emptyClass);
+                    this.containerElement.removeClass(settings.fullClass);
+                    this.containerElement.removeClass(settings.emptyClass);
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {
-                    (val) ? this.barContainer.css('transition', 'width 0.6s ease 0s') : this.barContainer.css('transition', 'none');
+                    (val) ? this.barContainer.css('transition', '') : this.barContainer.css('transition', 'none');
                 };
 
                 bar.init = function () {
-                    bar.progressObj = new ProgressObj(barElement);
+                    bar.progressObj = new ProgressObj($element);
 
                     var facade  = {
                         get: function () {
@@ -70,7 +75,7 @@
                         set: function (newVal) {
                             bar.progressObj.set(newVal);
                         },
-                        updateAnimation: function (val) {
+                        setAnimation: function (val) {
                             bar.progressObj.setAnimation(val);
                         }
                     };
@@ -100,7 +105,7 @@
             window.mozRequestAnimationFrame ||
             window.oRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
-            function (/* function */ callback, /* DOMElement */ element) {
+            function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
@@ -111,11 +116,11 @@
             var instance = null;
             var lastVal = 0;
             var animation = true;
-            var requairedClear = false;
+            var requiredClear = false;
 
             var intervalCont = (function () {
-                var progressIncrementation = function (stat) {
-                    var rnd = 0;
+                var incrementStrategy = function (stat) {
+                    var rnd;
                     if (stat >= 0 && stat < 25) {
                         // Start out between 3 - 6% increments
                         rnd = (Math.random() * (5 - 3 + 1) + 3);
@@ -138,7 +143,7 @@
                 var interval = null;
                 return {
                     increment: function () {
-                        obj.set(progressIncrementation(lastVal));
+                        obj.set(incrementStrategy(lastVal));
                     },
                     setInterval: function () {
                         var self = this;
@@ -167,15 +172,13 @@
                     instance = null;
                     deferred.promise.then(function (data) {
                         instance = data;
-                        if (lastVal) {
-                            instance.set(lastVal);
-                        }
+                        instance.set(lastVal);
                     });
                 },
                 set: function (val) {
                     //todo rewrite
-                    if(requairedClear){
-                        requairedClear = false;
+                    if (requiredClear) {
+                        requiredClear = false;
                         this.clear();
                     }
 
@@ -193,7 +196,7 @@
                     if (instance) {
                         instance.set(lastVal);
                     }
-                    return obj;
+                    return this;
                 },
                 get: function () {
                     return lastVal;
@@ -201,26 +204,28 @@
                 isInProgress: function () {
                     return intervalCont.isInProgress();
                 },
-                increase: function () {
-                    intervalCont.increment();
-                    return obj;
+                increase: function (value) {
+                    (value)? this.set(lastVal + value) : intervalCont.increment();
+                    return this;
                 },
                 start: function () {
                     intervalCont.setInterval();
-                    return obj;
+                    return this;
                 },
                 stop: function () {
                     intervalCont.clearInterval();
-                    return obj;
+                    return this;
                 },
                 done: function () {
                     this.stop();
                     this.set(100);
-                    requairedClear = true;
+                    requiredClear = true;
+                    return this;
                 },
                 reset: function () {
                     this.stop();
                     this.set(0);
+                    return this;
                 },
                 clear: function () {
                     var self = this;
@@ -231,14 +236,14 @@
                     requestAnimationFrame(function () {
                         self.setAnimation(animationVal);
                     });
-                    return obj;
+                    return this;
                 },
                 setAnimation: function (val) {
                     animation = !!val;
                     deferred.promise.then(function (data) {
-                        data.updateAnimation(animation);
+                        data.setAnimation(animation);
                     });
-                    return obj;
+                    return this;
                 },
                 isAnimated: function () {
                     return animation;

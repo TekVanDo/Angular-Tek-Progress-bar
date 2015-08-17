@@ -6,7 +6,7 @@
             window.mozRequestAnimationFrame ||
             window.oRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
-            function (/* function */ callback, /* DOMElement */ element) {
+            function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
@@ -17,11 +17,11 @@
             var instance = null;
             var lastVal = 0;
             var animation = true;
-            var requairedClear = false;
+            var requiredClear = false;
 
             var intervalCont = (function () {
-                var progressIncrementation = function (stat) {
-                    var rnd = 0;
+                var incrementStrategy = function (stat) {
+                    var rnd;
                     if (stat >= 0 && stat < 25) {
                         // Start out between 3 - 6% increments
                         rnd = (Math.random() * (5 - 3 + 1) + 3);
@@ -44,7 +44,7 @@
                 var interval = null;
                 return {
                     increment: function () {
-                        obj.set(progressIncrementation(lastVal));
+                        obj.set(incrementStrategy(lastVal));
                     },
                     setInterval: function () {
                         var self = this;
@@ -66,6 +66,7 @@
 
             var obj = {
                 _getDefer: function () {
+                    console.log(deferred);
                     return deferred;
                 },
                 _updateDefer: function () {
@@ -73,15 +74,16 @@
                     instance = null;
                     deferred.promise.then(function (data) {
                         instance = data;
-                        if (lastVal) {
-                            instance.set(lastVal);
-                        }
+                        instance.set(lastVal);
                     });
+                },
+                getPromise: function () {
+                    return deferred.promise;
                 },
                 set: function (val) {
                     //todo rewrite
-                    if(requairedClear){
-                        requairedClear = false;
+                    if (requiredClear) {
+                        requiredClear = false;
                         this.clear();
                     }
 
@@ -99,7 +101,7 @@
                     if (instance) {
                         instance.set(lastVal);
                     }
-                    return obj;
+                    return this;
                 },
                 get: function () {
                     return lastVal;
@@ -107,26 +109,28 @@
                 isInProgress: function () {
                     return intervalCont.isInProgress();
                 },
-                increase: function () {
-                    intervalCont.increment();
-                    return obj;
+                increase: function (value) {
+                    (value)? this.set(lastVal + value) : intervalCont.increment();
+                    return this;
                 },
                 start: function () {
                     intervalCont.setInterval();
-                    return obj;
+                    return this;
                 },
                 stop: function () {
                     intervalCont.clearInterval();
-                    return obj;
+                    return this;
                 },
                 done: function () {
                     this.stop();
                     this.set(100);
-                    requairedClear = true;
+                    requiredClear = true;
+                    return this;
                 },
                 reset: function () {
                     this.stop();
                     this.set(0);
+                    return this;
                 },
                 clear: function () {
                     var self = this;
@@ -137,14 +141,14 @@
                     requestAnimationFrame(function () {
                         self.setAnimation(animationVal);
                     });
-                    return obj;
+                    return this;
                 },
                 setAnimation: function (val) {
                     animation = !!val;
                     deferred.promise.then(function (data) {
-                        data.updateAnimation(animation);
+                        data.setAnimation(animation);
                     });
-                    return obj;
+                    return this;
                 },
                 isAnimated: function () {
                     return animation;

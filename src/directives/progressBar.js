@@ -5,25 +5,28 @@
             scope: {
                 control: "=",
                 containerClass: "@class",
-                barClass: "@",
-                successClass: "@",
+                //barClass: "@",
+                //successClass: "@",
                 value: "="
             },
             restrict: "E",
             transclude: true,
             controllerAs: "bar",
-            template: "<div class='progress {{::bar.containerClass}}'><div class='progress-bar {{::bar.barClass}}' ng-transclude></div></div>",
+            templateUrl: "Tek.progressBarDirective.html",
             bindToController: true,
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
-                var barElement = angular.element($element.find('div')[1]);
+
+
                 var settings = {
                     fullClass: 'full-bar',
                     emptyClass: 'empty-bar'
                 };
 
-                function ProgressObj(barContainer) {
-                    this.barContainer = barContainer;
+                function ProgressObj(element) {
+                    var divElements = element.find('div');
+                    this.containerElement = angular.element(divElements[0]);
+                    this.barContainer = angular.element(divElements[1]);
                     this.value = 0;
                 }
 
@@ -39,25 +42,25 @@
 
                 ProgressObj.prototype.updateClasses = function () {
                     if(this.value === 0){
-                        this.barContainer.removeClass(settings.fullClass);
-                        return this.barContainer.addClass(settings.emptyClass);
+                        this.containerElement.removeClass(settings.fullClass);
+                        return this.containerElement.addClass(settings.emptyClass);
                     }
 
                     if(this.value === 100){
-                        this.barContainer.removeClass(settings.emptyClass);
-                        return this.barContainer.addClass(settings.fullClass);
+                        this.containerElement.removeClass(settings.emptyClass);
+                        return this.containerElement.addClass(settings.fullClass);
                     }
 
-                    this.barContainer.removeClass(settings.fullClass);
-                    this.barContainer.removeClass(settings.emptyClass);
+                    this.containerElement.removeClass(settings.fullClass);
+                    this.containerElement.removeClass(settings.emptyClass);
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {
-                    (val) ? this.barContainer.css('transition', 'width 0.6s ease 0s') : this.barContainer.css('transition', 'none');
+                    (val) ? this.barContainer.css('transition', '') : this.barContainer.css('transition', 'none');
                 };
 
                 bar.init = function () {
-                    bar.progressObj = new ProgressObj(barElement);
+                    bar.progressObj = new ProgressObj($element);
 
                     var facade  = {
                         get: function () {
@@ -66,7 +69,7 @@
                         set: function (newVal) {
                             bar.progressObj.set(newVal);
                         },
-                        updateAnimation: function (val) {
+                        setAnimation: function (val) {
                             bar.progressObj.setAnimation(val);
                         }
                     };

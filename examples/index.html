@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/examples/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
-<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar>
+<!--<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar>-->
+<progress-bar class="testSS" bar-class="test" control="main.bar">test</progress-bar>
 
 <button ng-click="main.isBar = !main.isBar">toggle</button>
 <button ng-click="main.setRand()">setRand</button>
