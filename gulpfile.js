@@ -30,9 +30,9 @@ gulp.task('serve', function() {
     });
 
     gulp.watch([
-        'examples/index.html',
         'examples/**/*.html',
         'examples/**/*.js',
+        'examples/**/*.css',
         'src/**/*.js',
         'src/**/*.html'
     ], {cwd: './'}, reload);

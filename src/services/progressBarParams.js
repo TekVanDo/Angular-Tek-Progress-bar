@@ -48,6 +48,12 @@
                     },
                     setInterval: function () {
                         var self = this;
+
+                        if (requiredClear) {
+                            requiredClear = false;
+                            obj.clear();
+                        }
+
                         if (!interval) {
                             interval = setInterval(function () {
                                 self.increment();
@@ -66,7 +72,6 @@
 
             var obj = {
                 _getDefer: function () {
-                    console.log(deferred);
                     return deferred;
                 },
                 _updateDefer: function () {

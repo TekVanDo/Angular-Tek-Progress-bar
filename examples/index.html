@@ -4,29 +4,97 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/examples/default-angu-bar.css">
     <link rel="stylesheet" href="/examples/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
-<!--<progress-bar class="testSS" bar-class="test" ng-if="main.isBar" control="main.bar">test</progress-bar>-->
-<progress-bar class="testSS" bar-class="test" control="main.bar">test</progress-bar>
+<header class="marquee">
+    <progress-bar class="progress-xxs progress-loading progress-loading-fixed" control="main.bar"></progress-bar>
+    <div class="call-out">
+        <div class="container">
+            <div class="col-md-9">
+                <h1>angular-progress-bar</h1>
 
-<button ng-click="main.isBar = !main.isBar">toggle</button>
-<button ng-click="main.setRand()">setRand</button>
+                <p>AngularJS 1.2+ progress bar directive.</p>
+            </div>
+            <div class="bs-docs-social col-md-3">
+                <ul>
 
-<button ng-click="main.reset()">reset</button>
-<button ng-click="main.clear()">clear</button>
-<button ng-click="main.start()">start</button>
-<button ng-click="main.stop()">stop</button>
-<button ng-click="main.done()">done</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
 
-<button ng-click="main.toggleAnimation()">toggleAnimation</button>
-
-<input type="number" ng-model="main.valBar">
-<button ng-click="main.increase()">Increase</button>
-<button ng-click="main.get()">Get</button>
-<button ng-click="main.set()">Set</button>
+<div class="container">
 
 
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Demo</b></div>
+        <div class="panel-body">
+            <form class="form-inline">
+                <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle</button>
+                <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
+                <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
+                <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
+                <button class="btn btn-primary" ng-click="main.bar.start()">start</button>
+                <button class="btn btn-primary" ng-click="main.bar.stop()">stop</button>
+                <button class="btn btn-primary" ng-click="main.bar.done()">done</button>
+                <button class="btn btn-primary" ng-click="main.bar.setAnimation(!main.bar.isAnimated())">toggleAnimation
+                </button>
+
+                <div class="form-group">
+                    <label class="sr-only">Password</label>
+                    <input type="number" class="form-control" ng-model="main.valBar">
+                </div>
+
+                <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
+                <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
+                <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Features</b></div>
+        <div class="panel-body">
+            <ul>
+                <li>test</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Steps for getting started</b></div>
+        <div class="panel-body">
+            <ol>
+                <li>
+                    Add references to <a target="_blank" href="http://angularjs.org/">AngularJS</a>
+                </li>
+                <li>
+                    Install angular-progress-bar via bower or download latest zip
+                    <code>bower install angular-progress-bar</code>
+                </li>
+                <li>
+                    Where you declare your app module, add angular-progress-bar: <br>
+                    <code>Tek.progressBar</code>
+                </li>
+                <li>
+
+                    <code>Tek.progressBar</code>
+                </li>
+                <li>
+                    In your html file within the controller where you plan to use progress-bar, add:
+                    <code>
+                        <progress-bar control="progressControl">...</progress-bar>
+                    </code>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+</div>
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../src/progressBarModule.js"></script>
 <script src="../src/directives/progressBar.js"></script>
