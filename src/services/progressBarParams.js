@@ -82,6 +82,9 @@
                         instance.set(lastVal);
                     });
                 },
+                _updateValue: function (val) {
+                    lastVal = val;
+                },
                 getPromise: function () {
                     return deferred.promise;
                 },

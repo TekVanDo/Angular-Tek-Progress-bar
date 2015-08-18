@@ -9,7 +9,7 @@
 </head>
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
-    <progress-bar class="progress-xxs progress-loading progress-loading-fixed" control="main.bar"></progress-bar>
+    <!--<progress-bar class="progress-xxs progress-loading progress-loading-fixed" control="main.bar"></progress-bar>-->
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
@@ -51,6 +51,28 @@
                 <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
                 <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
                 <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
+
+
+                <!--<progress-bar ng-model="main.bar1ProgressVal" control="main.bar1"></progress-bar>-->
+                <input type="text" ng-model="main.bar1ProgressVal">
+
+
+                <progress-bar ng-model="main.bar2ProgressVal" control="main.bar2"></progress-bar>
+                <button class="btn btn-primary" ng-click="main.bar2.set(main.random())">setRand</button>
+                <button class="btn btn-primary" ng-click="main.bar2.reset()">reset</button>
+                <button class="btn btn-primary" ng-click="main.bar2.clear()">clear</button>
+                <button class="btn btn-primary" ng-click="main.bar2.start()">start</button>
+                <button class="btn btn-primary" ng-click="main.bar2.stop()">stop</button>
+                <button class="btn btn-primary" ng-click="main.bar2.done()">done</button>
+                <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">toggleAnimation
+                </button>
+
+                <div class="form-group">
+                    <label class="sr-only">Password</label>
+                    <input type="number" class="form-control" ng-model="main.bar2ProgressVal">
+                </div>
+
+                <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
             </form>
         </div>
     </div>

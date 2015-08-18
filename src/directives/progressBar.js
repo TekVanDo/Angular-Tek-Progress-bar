@@ -5,9 +5,7 @@
             scope: {
                 control: "=",
                 containerClass: "@class",
-                //barClass: "@",
-                //successClass: "@",
-                value: "="
+                ngModel: "="
             },
             restrict: "E",
             transclude: true,
@@ -31,7 +29,7 @@
                 }
 
                 ProgressObj.prototype.get = function () {
-                  return this.value;
+                    return this.value;
                 };
 
                 ProgressObj.prototype.set = function (val) {
@@ -41,12 +39,12 @@
                 };
 
                 ProgressObj.prototype.updateClasses = function () {
-                    if(this.value === 0){
+                    if (this.value === 0) {
                         this.containerElement.removeClass(settings.fullClass);
                         return this.containerElement.addClass(settings.emptyClass);
                     }
 
-                    if(this.value === 100){
+                    if (this.value === 100) {
                         this.containerElement.removeClass(settings.emptyClass);
                         return this.containerElement.addClass(settings.fullClass);
                     }
@@ -62,12 +60,19 @@
                 bar.init = function () {
                     bar.progressObj = new ProgressObj($element);
 
-                    var facade  = {
+                    var facade = {
                         get: function () {
                             return bar.progressObj.get();
                         },
                         set: function (newVal) {
-                            bar.progressObj.set(newVal);
+                            if (bar.ngModel !== undefined) { // todo setInterval problem
+                                //$scope.$apply(function () {
+                                    bar.ngModel = newVal;
+                                //});
+                                $scope.$apply();
+                            }else{
+                                bar.progressObj.set(newVal);
+                            }
                         },
                         setAnimation: function (val) {
                             bar.progressObj.setAnimation(val);
@@ -80,8 +85,11 @@
                         $scope.$on('$destroy', function () {
                             bar.control._updateDefer();
                         });
-                    }else{
-                        $scope.$watch('bar.value', function (newVal) {
+                    }
+
+                    if (bar.ngModel !== undefined) {
+                        $scope.$watch('bar.ngModel', function (newVal, oldVal) {
+                            bar.control._updateValue(newVal);
                             bar.progressObj.set(newVal);
                         });
                     }
