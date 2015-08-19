@@ -5,6 +5,7 @@
             scope: {
                 manager: "=",
                 containerClass: "@class",
+                barClass: "@",
                 ngModel: "="
             },
             restrict: "E",
@@ -88,7 +89,9 @@
                     if (bar.ngModel !== undefined) {
                         $scope.$watch('bar.ngModel', function (newVal, oldVal) {
                             if(newVal !== oldVal) {
-                                bar.manager._updateValue(newVal);
+                                if(bar.manager) {
+                                    bar.manager._updateValue(newVal);
+                                }
                                 bar.progressObj.set(newVal);
                             }
                         });

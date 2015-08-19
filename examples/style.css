@@ -518,6 +518,11 @@ fieldset[disabled] .btn-black.active {
     border-color: #edf1f2;
 }
 
+.m-tb-sm {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .call-out {
     background-color: #f98752;
     background-size: cover;

@@ -10,7 +10,7 @@
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
     <tek-progress-bar class="progress-xxs progress-loading progress-loading-fixed"
-                      manager="main.bar"></tek-progress-bar>
+                      manager="main.loadingBar"></tek-progress-bar>
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
@@ -33,49 +33,63 @@
     <div class="panel panel-default">
         <div class="panel-heading"><b>Demo</b></div>
         <div class="panel-body">
-            <form class="form-inline">
-                <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle</button>
-                <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
-                <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
-                <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
-                <button class="btn btn-primary" ng-click="main.bar.start()">start</button>
-                <button class="btn btn-primary" ng-click="main.bar.stop()">stop</button>
-                <button class="btn btn-primary" ng-click="main.bar.done()">done</button>
-                <button class="btn btn-primary" ng-click="main.bar.setAnimation(!main.bar.isAnimated())">toggleAnimation
-                </button>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="m-t-xs">Button options</h4>
 
-                <div class="form-group">
-                    <label class="sr-only">Password</label>
-                    <input type="number" class="form-manager" ng-model="main.valBar">
+                    <div>
+                        <tek-progress-bar class="progress-xxs progress-loading m-t-xs"
+                                          manager="main.bar"></tek-progress-bar>
+                        <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle</button>
+                        <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
+                        <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
+                        <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
+                        <button class="btn btn-primary" ng-click="main.bar.start()">start</button>
+                        <button class="btn btn-primary" ng-click="main.bar.stop()">stop</button>
+                        <button class="btn btn-primary" ng-click="main.bar.done()">done</button>
+                        <button class="btn btn-primary" ng-click="main.bar.setAnimation(!main.bar.isAnimated())">
+                            toggleAnimation
+                        </button>
+                        <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.valBar">
+                        <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
+                        <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
+                        <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
+                    </div>
                 </div>
+            </div>
 
-                <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
-                <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
-                <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="m-t-xs">Button options</h4>
 
-
-                <tek-progress-bar ng-model="main.bar1ProgressVal" manager="main.bar1"></tek-progress-bar>
-                <input type="text" ng-model="main.bar1ProgressVal">
-
-
-                <tek-progress-bar ng-model="main.bar2ProgressVal" manager="main.bar2"></tek-progress-bar>
-                <button class="btn btn-primary" ng-click="main.bar2.set(main.random())">setRand</button>
-                <button class="btn btn-primary" ng-click="main.bar2.reset()">reset</button>
-                <button class="btn btn-primary" ng-click="main.bar2.clear()">clear</button>
-                <button class="btn btn-primary" ng-click="main.bar2.start()">start</button>
-                <button class="btn btn-primary" ng-click="main.bar2.stop()">stop</button>
-                <button class="btn btn-primary" ng-click="main.bar2.done()">done</button>
-                <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">
-                    toggleAnimation
-                </button>
-
-                <div class="form-group">
-                    <label class="sr-only">Password</label>
-                    <input type="number" class="form-manager" ng-model="main.bar2ProgressVal">
+                    <div>
+                        <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-danger"
+                                          ng-model="main.bar1ProgressVal">
+                        </tek-progress-bar>
+                        <input type="number" min="0" step="0.01" max="100" ng-model="main.bar1ProgressVal">
+                    </div>
                 </div>
+            </div>
 
-                <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
-            </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="m-t-xs">Button options</h4>
+                    <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-success" ng-model="main.bar2ProgressVal"
+                                      manager="main.bar2">{{main.bar2ProgressVal}}%
+                    </tek-progress-bar>
+                    <button class="btn btn-primary" ng-click="main.bar2.set(main.random())">setRand</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.reset()">reset</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.clear()">clear</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.start()">start</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.stop()">stop</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.done()">done</button>
+                    <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">
+                        toggleAnimation
+                    </button>
+                    <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.bar2ProgressVal">
+                    <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
+                </div>
+            </div>
         </div>
     </div>
 
