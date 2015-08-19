@@ -17,7 +17,7 @@ module.exports = function (config) {
             './bower_components/angular/angular.js',
             './bower_components/angular-mocks/angular-mocks.js',
             './src/progressBarModule.js',
-            './src/services/progressBarParams.js',
+            './src/services/progressBarManager.js',
             './src/directives/progressBar.js',
             './test/**/*.js'
         ],

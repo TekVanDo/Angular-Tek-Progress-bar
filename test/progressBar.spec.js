@@ -1,15 +1,15 @@
 "use strict";
 describe('progressBar directive', function () {
-    var progressBar, scope, compile, progressBarParams, $progressElement, $barElement;
+    var progressBar, scope, compile, progressBarManager, $progressElement, $barElement;
 
     beforeEach(function () {
         module('Tek.progressBar');
 
         inject(function ($compile, $rootScope, $injector) {
-            progressBarParams = $injector.get('progressBarParams')();
+            progressBarManager = $injector.get('progressBarManager')();
             compile = $compile;
             scope = $rootScope.$new();
-            scope.bar = progressBarParams;
+            scope.bar = progressBarManager;
 
         });
 
@@ -19,7 +19,7 @@ describe('progressBar directive', function () {
     });
 
     function getCompiledElement() {
-        var element = angular.element('<progress-bar control="bar"></progress-bar>');
+        var element = angular.element('<tek-progress-bar manager="bar"></tek-progress-bar>');
         var compiledElement = compile(element)(scope);
         scope.$digest();
         return compiledElement;

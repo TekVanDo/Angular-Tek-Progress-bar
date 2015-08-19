@@ -11,7 +11,7 @@
             };
     })();
 
-    angular.module('Tek.progressBar').factory('progressBarParams', ['$q', function ($q) {
+    angular.module('Tek.progressBar').factory('progressBarManager', ['$q', function ($q) {
         return function (defaultSettings) {
             var deferred = $q.defer();
             var instance = null;
@@ -48,7 +48,6 @@
                     },
                     setInterval: function () {
                         var self = this;
-
                         if (requiredClear) {
                             requiredClear = false;
                             obj.clear();
@@ -89,12 +88,6 @@
                     return deferred.promise;
                 },
                 set: function (val) {
-                    //todo rewrite
-                    if (requiredClear) {
-                        requiredClear = false;
-                        this.clear();
-                    }
-
                     //Checking value is number and not NaN
                     if (typeof val !== 'number' || val !== val) {
                         throw new Error("Wrong value");
@@ -106,8 +99,16 @@
                         val = 100;
                     }
                     lastVal = val;
-                    if (instance) {
-                        instance.set(lastVal);
+
+                    //todo rewrite
+                    if (requiredClear) {
+                        requiredClear = false;
+                        this.clear(val);
+                        return this;
+                    } else {
+                        if (instance) {
+                            instance.set(lastVal);
+                        }
                     }
                     return this;
                 },
@@ -118,7 +119,7 @@
                     return intervalCont.isInProgress();
                 },
                 increase: function (value) {
-                    (value)? this.set(lastVal + value) : intervalCont.increment();
+                    (value) ? this.set(lastVal + value) : intervalCont.increment();
                     return this;
                 },
                 start: function () {
@@ -140,15 +141,25 @@
                     this.set(0);
                     return this;
                 },
-                clear: function () {
-                    var self = this;
+                clear: function (val) {
                     var animationVal = this.isAnimated();
+                    var self = this;
                     this.stop();
                     this.setAnimation(false);
                     this.reset();
+
+                    var deferred = $q.defer();
                     requestAnimationFrame(function () {
                         self.setAnimation(animationVal);
+                        deferred.resolve();
                     });
+
+                    deferred.promise.then(function () {
+                        if(val !== undefined) {
+                            self.set(val);
+                        }
+                    });
+
                     return this;
                 },
                 setAnimation: function (val) {

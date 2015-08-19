@@ -6,8 +6,8 @@ var reload = browserSync.reload;
 var config = {
     source: ["src/*.module.js", "src/**/*.js"],
     dest: {
-        min: "progressBarModule.min.js",
-        normal: "progressBarModule.js",
+        min: "tek.progress-bar.min.js",
+        normal: "tek.progress-bar.js",
         dir: "dist"
     },
     karma: {

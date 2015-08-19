@@ -9,11 +9,12 @@
 </head>
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
-    <!--<progress-bar class="progress-xxs progress-loading progress-loading-fixed" control="main.bar"></progress-bar>-->
+    <tek-progress-bar class="progress-xxs progress-loading progress-loading-fixed"
+                      manager="main.bar"></tek-progress-bar>
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
-                <h1>angular-progress-bar</h1>
+                <h1>angular-tek-progress-bar</h1>
 
                 <p>AngularJS 1.2+ progress bar directive.</p>
             </div>
@@ -45,7 +46,7 @@
 
                 <div class="form-group">
                     <label class="sr-only">Password</label>
-                    <input type="number" class="form-control" ng-model="main.valBar">
+                    <input type="number" class="form-manager" ng-model="main.valBar">
                 </div>
 
                 <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
@@ -53,23 +54,24 @@
                 <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
 
 
-                <!--<progress-bar ng-model="main.bar1ProgressVal" control="main.bar1"></progress-bar>-->
+                <tek-progress-bar ng-model="main.bar1ProgressVal" manager="main.bar1"></tek-progress-bar>
                 <input type="text" ng-model="main.bar1ProgressVal">
 
 
-                <progress-bar ng-model="main.bar2ProgressVal" control="main.bar2"></progress-bar>
+                <tek-progress-bar ng-model="main.bar2ProgressVal" manager="main.bar2"></tek-progress-bar>
                 <button class="btn btn-primary" ng-click="main.bar2.set(main.random())">setRand</button>
                 <button class="btn btn-primary" ng-click="main.bar2.reset()">reset</button>
                 <button class="btn btn-primary" ng-click="main.bar2.clear()">clear</button>
                 <button class="btn btn-primary" ng-click="main.bar2.start()">start</button>
                 <button class="btn btn-primary" ng-click="main.bar2.stop()">stop</button>
                 <button class="btn btn-primary" ng-click="main.bar2.done()">done</button>
-                <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">toggleAnimation
+                <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">
+                    toggleAnimation
                 </button>
 
                 <div class="form-group">
                     <label class="sr-only">Password</label>
-                    <input type="number" class="form-control" ng-model="main.bar2ProgressVal">
+                    <input type="number" class="form-manager" ng-model="main.bar2ProgressVal">
                 </div>
 
                 <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
@@ -95,11 +97,11 @@
                     Add references to <a target="_blank" href="http://angularjs.org/">AngularJS</a>
                 </li>
                 <li>
-                    Install angular-progress-bar via bower or download latest zip
-                    <code>bower install angular-progress-bar</code>
+                    Install angular-tek-progress-bar via bower or download latest zip
+                    <code>bower install angular-tek-progress-bar</code>
                 </li>
                 <li>
-                    Where you declare your app module, add angular-progress-bar: <br>
+                    Where you declare your app module, add angular-tek-progress-bar: <br>
                     <code>Tek.progressBar</code>
                 </li>
                 <li>
@@ -107,9 +109,9 @@
                     <code>Tek.progressBar</code>
                 </li>
                 <li>
-                    In your html file within the controller where you plan to use progress-bar, add:
+                    In your html file within the controller where you plan to use tek-progress-bar, add:
                     <code>
-                        <progress-bar control="progressControl">...</progress-bar>
+                        <tek-progress-bar manager="progressControl">...</tek-progress-bar>
                     </code>
                 </li>
             </ol>
@@ -120,7 +122,7 @@
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../src/progressBarModule.js"></script>
 <script src="../src/directives/progressBar.js"></script>
-<script src="../src/services/progressBarParams.js"></script>
+<script src="../src/services/progressBarManager.js"></script>
 <script src="mainController.js"></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 (function () {
     "use strict";
-    angular.module('Tek.progressBar').directive('progressBar', function () {
+    angular.module('Tek.progressBar').directive('tekProgressBar', function () {
         return {
             scope: {
-                control: "=",
+                manager: "=",
                 containerClass: "@class",
                 ngModel: "="
             },
@@ -14,7 +14,6 @@
             bindToController: true,
             controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
                 var bar = this;
-
 
                 var settings = {
                     fullClass: 'full-bar',
@@ -66,11 +65,10 @@
                         },
                         set: function (newVal) {
                             if (bar.ngModel !== undefined) { // todo setInterval problem
-                                //$scope.$apply(function () {
+                                $scope.$evalAsync(function () {
                                     bar.ngModel = newVal;
-                                //});
-                                $scope.$apply();
-                            }else{
+                                });
+                            } else {
                                 bar.progressObj.set(newVal);
                             }
                         },
@@ -79,18 +77,20 @@
                         }
                     };
 
-                    if (bar.control) {
-                        bar.control._getDefer().resolve(facade);
+                    if (bar.manager) {
+                        bar.manager._getDefer().resolve(facade);
 
                         $scope.$on('$destroy', function () {
-                            bar.control._updateDefer();
+                            bar.manager._updateDefer();
                         });
                     }
 
                     if (bar.ngModel !== undefined) {
                         $scope.$watch('bar.ngModel', function (newVal, oldVal) {
-                            bar.control._updateValue(newVal);
-                            bar.progressObj.set(newVal);
+                            if(newVal !== oldVal) {
+                                bar.manager._updateValue(newVal);
+                                bar.progressObj.set(newVal);
+                            }
                         });
                     }
                 };

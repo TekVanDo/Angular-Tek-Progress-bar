@@ -1,21 +1,21 @@
 (function () {
     "use strict";
-    angular.module('test', ['Tek.progressBar']).controller('mainController', ['progressBarParams',
-        function (progressBarParams) {
+    angular.module('test', ['Tek.progressBar']).controller('mainController', ['progressBarManager',
+        function (progressBarManager) {
             var main = this;
 
             main.random = function () {
                 return Math.floor(Math.random() * 100);
             };
 
-            main.bar = progressBarParams();
+            main.bar = progressBarManager();
             main.valBar = 0;
 
             main.bar1ProgressVal = 0;
-            main.bar1 = progressBarParams();
+            main.bar1 = progressBarManager();
 
             main.bar2ProgressVal = 0;
-            main.bar2 = progressBarParams();
+            main.bar2 = progressBarManager();
         }
     ]);
 }());

@@ -1,24 +1,24 @@
 "use strict";
-describe('progressBarParams.js', function () {
-    var progressBarParams;
+describe('progressBarManager.js', function () {
+    var progressBarManager;
 
     beforeEach(module('Tek.progressBar'));
     beforeEach(inject(function ($injector) {
-        progressBarParams = $injector.get('progressBarParams');
+        progressBarManager = $injector.get('progressBarManager');
     }));
 
     it('Should be a function', function () {
-        expect(progressBarParams).toEqual(jasmine.any(Function));
+        expect(progressBarManager).toEqual(jasmine.any(Function));
     });
 
     it('Should be a object', function () {
-        expect(progressBarParams()).toEqual(jasmine.any(Object));
+        expect(progressBarManager()).toEqual(jasmine.any(Object));
     });
 
-    describe('progressBarParams.js', function () {
+    describe('progressBarManager.js', function () {
         var progressBarParamsInstance;
         beforeEach(function () {
-            progressBarParamsInstance = progressBarParams();
+            progressBarParamsInstance = progressBarManager();
         });
 
         it('It should get default value', function () {
