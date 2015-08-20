@@ -534,3 +534,16 @@ fieldset[disabled] .btn-black.active {
     width: 100%;
     padding: 5% 20%;
 }
+
+.bs-docs-social {
+    max-height: 200px;
+}
+
+.bs-docs-social ul {
+    list-style: outside none none;
+    padding: 1em 0 0;
+}
+
+.bs-docs-social ul li {
+    height: 30px;
+}
