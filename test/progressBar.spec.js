@@ -1,7 +1,10 @@
 "use strict";
 describe('progressBar directive', function () {
-    var progressBar, scope, compile, progressBarManager, $progressElement, $barElement;
+    var progressBar, progressBarWithModel, scope, compile, progressBarManager, $progressElement,
+        $barElement, $progressElementWithModel, $barElementWithModel;
 
+    var bar = '<tek-progress-bar manager="bar"></tek-progress-bar>';
+    var barWithModel = '<tek-progress-bar ng-model="model"></tek-progress-bar>';
     beforeEach(function () {
         module('Tek.progressBar');
 
@@ -10,12 +13,16 @@ describe('progressBar directive', function () {
             compile = $compile;
             scope = $rootScope.$new();
             scope.bar = progressBarManager;
-
+            scope.model = 0;
         });
 
-        progressBar = getCompiledElement();
+        progressBar = getCompiledElement(bar);
         $progressElement = angular.element(progressBar.find('div')[0]);
         $barElement = angular.element(progressBar.find('div')[1]);
+
+        progressBarWithModel = getCompiledElement(barWithModel);
+        $progressElementWithModel = angular.element(progressBarWithModel.find('div')[0]);
+        $barElementWithModel = angular.element(progressBarWithModel.find('div')[1]);
     });
 
     function getCompiledElement() {
@@ -64,4 +71,16 @@ describe('progressBar directive', function () {
             expect($progressElement.hasClass('empty-bar')).toBeFalsy();
         });
     });
+
+    //describe('Testing progressBar with ngModel', function () { //todo
+    //    beforeEach(function () {
+    //        scope.model = 100;
+    //        scope.$digest();
+    //    });
+    //
+    //    it('Width should be 100', function () {
+    //        console.log($barElementWithModel);
+    //        expect($barElementWithModel.css('width')).toEqual(100 + '%');
+    //    });
+    //});
 });

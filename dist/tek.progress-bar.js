@@ -1,28 +1,26 @@
 (function () {
     "use strict";
     angular.module('Tek.progressBar', []).run(['$templateCache', function ($templateCache) {
-        $templateCache.put('Tek.progressBarDirective.html', "<div class='progress'><div class='progress-bar' ng-transclude></div></div>");
+        $templateCache.put('Tek.progressBarDirective.html', "<div class='progress' ng-class='bar.containerClass'><div class='progress-bar' ng-class='bar.barClass' ng-transclude></div></div>");
     }]);
 }());
 (function () {
     "use strict";
-    angular.module('Tek.progressBar').directive('progressBar', function () {
+    angular.module('Tek.progressBar').directive('tekProgressBar', function () {
         return {
             scope: {
-                control: "=",
+                manager: "=",
                 containerClass: "@class",
-                //barClass: "@",
-                //successClass: "@",
-                value: "="
+                barClass: "@",
+                ngModel: "="
             },
             restrict: "E",
             transclude: true,
             controllerAs: "bar",
             templateUrl: "Tek.progressBarDirective.html",
             bindToController: true,
-            controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
+            controller: ['$scope', '$element', function ($scope, $element) {
                 var bar = this;
-
 
                 var settings = {
                     fullClass: 'full-bar',
@@ -37,7 +35,7 @@
                 }
 
                 ProgressObj.prototype.get = function () {
-                  return this.value;
+                    return this.value;
                 };
 
                 ProgressObj.prototype.set = function (val) {
@@ -47,12 +45,12 @@
                 };
 
                 ProgressObj.prototype.updateClasses = function () {
-                    if(this.value === 0){
+                    if (this.value === 0) {
                         this.containerElement.removeClass(settings.fullClass);
                         return this.containerElement.addClass(settings.emptyClass);
                     }
 
-                    if(this.value === 100){
+                    if (this.value === 100) {
                         this.containerElement.removeClass(settings.emptyClass);
                         return this.containerElement.addClass(settings.fullClass);
                     }
@@ -68,27 +66,40 @@
                 bar.init = function () {
                     bar.progressObj = new ProgressObj($element);
 
-                    var facade  = {
+                    var facade = {
                         get: function () {
                             return bar.progressObj.get();
                         },
                         set: function (newVal) {
-                            bar.progressObj.set(newVal);
+                            if (bar.ngModel !== undefined) { // todo setInterval problem
+                                $scope.$evalAsync(function () {
+                                    bar.ngModel = newVal;
+                                });
+                            } else {
+                                bar.progressObj.set(newVal);
+                            }
                         },
                         setAnimation: function (val) {
                             bar.progressObj.setAnimation(val);
                         }
                     };
 
-                    if (bar.control) {
-                        bar.control._getDefer().resolve(facade);
+                    if (bar.manager) {
+                        bar.manager._getDefer().resolve(facade);
 
                         $scope.$on('$destroy', function () {
-                            bar.control._updateDefer();
+                            bar.manager._updateDefer();
                         });
-                    }else{
-                        $scope.$watch('bar.value', function (newVal) {
-                            bar.progressObj.set(newVal);
+                    }
+
+                    if (bar.ngModel !== undefined) {
+                        $scope.$watch('bar.ngModel', function (newVal, oldVal) {
+                            if(newVal !== oldVal) {
+                                if(bar.manager) {
+                                    bar.manager._updateValue(newVal);
+                                }
+                                bar.progressObj.set(newVal);
+                            }
                         });
                     }
                 };
@@ -110,7 +121,7 @@
             };
     })();
 
-    angular.module('Tek.progressBar').factory('progressBarParams', ['$q', function ($q) {
+    angular.module('Tek.progressBar').factory('progressBarManager', ['$q', function ($q) {
         return function (defaultSettings) {
             var deferred = $q.defer();
             var instance = null;
@@ -147,6 +158,11 @@
                     },
                     setInterval: function () {
                         var self = this;
+                        if (requiredClear) {
+                            requiredClear = false;
+                            obj.clear();
+                        }
+
                         if (!interval) {
                             interval = setInterval(function () {
                                 self.increment();
@@ -175,13 +191,13 @@
                         instance.set(lastVal);
                     });
                 },
+                _updateValue: function (val) {
+                    lastVal = val;
+                },
+                getPromise: function () {
+                    return deferred.promise;
+                },
                 set: function (val) {
-                    //todo rewrite
-                    if (requiredClear) {
-                        requiredClear = false;
-                        this.clear();
-                    }
-
                     //Checking value is number and not NaN
                     if (typeof val !== 'number' || val !== val) {
                         throw new Error("Wrong value");
@@ -193,8 +209,16 @@
                         val = 100;
                     }
                     lastVal = val;
-                    if (instance) {
-                        instance.set(lastVal);
+
+                    //todo rewrite
+                    if (requiredClear) {
+                        requiredClear = false;
+                        this.clear(val);
+                        return this;
+                    } else {
+                        if (instance) {
+                            instance.set(lastVal);
+                        }
                     }
                     return this;
                 },
@@ -205,7 +229,7 @@
                     return intervalCont.isInProgress();
                 },
                 increase: function (value) {
-                    (value)? this.set(lastVal + value) : intervalCont.increment();
+                    (value) ? this.set(lastVal + value) : intervalCont.increment();
                     return this;
                 },
                 start: function () {
@@ -227,15 +251,25 @@
                     this.set(0);
                     return this;
                 },
-                clear: function () {
-                    var self = this;
+                clear: function (val) {
                     var animationVal = this.isAnimated();
+                    var self = this;
                     this.stop();
                     this.setAnimation(false);
                     this.reset();
+
+                    var deferred = $q.defer();
                     requestAnimationFrame(function () {
                         self.setAnimation(animationVal);
+                        deferred.resolve();
                     });
+
+                    deferred.promise.then(function () {
+                        if(val !== undefined) {
+                            self.set(val);
+                        }
+                    });
+
                     return this;
                 },
                 setAnimation: function (val) {

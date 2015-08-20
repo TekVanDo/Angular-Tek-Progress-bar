@@ -89,49 +89,15 @@
                     <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.bar2ProgressVal">
                     <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
                 </div>
+                <div class="col-md-12">
+                    html
+                    <code><tek-progress-bar class="m-tb-sm" bar-class="progress-bar-success" ng-model="main.bar2ProgressVal"
+                                            manager="main.bar2">{{main.bar2ProgressVal}}%
+                    </tek-progress-bar></code>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading"><b>Features</b></div>
-        <div class="panel-body">
-            <ul>
-                <li>test</li>
-            </ul>
-        </div>
-    </div>
-
-
-    <div class="panel panel-default">
-        <div class="panel-heading"><b>Steps for getting started</b></div>
-        <div class="panel-body">
-            <ol>
-                <li>
-                    Add references to <a target="_blank" href="http://angularjs.org/">AngularJS</a>
-                </li>
-                <li>
-                    Install angular-tek-progress-bar via bower or download latest zip
-                    <code>bower install angular-tek-progress-bar</code>
-                </li>
-                <li>
-                    Where you declare your app module, add angular-tek-progress-bar: <br>
-                    <code>Tek.progressBar</code>
-                </li>
-                <li>
-
-                    <code>Tek.progressBar</code>
-                </li>
-                <li>
-                    In your html file within the controller where you plan to use tek-progress-bar, add:
-                    <code>
-                        <tek-progress-bar manager="progressControl">...</tek-progress-bar>
-                    </code>
-                </li>
-            </ol>
-        </div>
-    </div>
-
 </div>
 <script src="../bower_components/angular/angular.js"></script>
 <script src="../src/progressBarModule.js"></script>

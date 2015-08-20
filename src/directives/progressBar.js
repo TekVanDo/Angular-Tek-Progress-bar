@@ -13,7 +13,7 @@
             controllerAs: "bar",
             templateUrl: "Tek.progressBarDirective.html",
             bindToController: true,
-            controller: ['$q', '$scope', '$element', function ($q, $scope, $element) {
+            controller: ['$scope', '$element', function ($scope, $element) {
                 var bar = this;
 
                 var settings = {
