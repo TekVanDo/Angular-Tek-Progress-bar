@@ -547,3 +547,12 @@ fieldset[disabled] .btn-black.active {
 .bs-docs-social ul li {
     height: 30px;
 }
+
+.github-btn > iframe {
+    float: left;
+}
+
+.title-text{
+    color: #fff;
+    text-decoration: none;
+}
