@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/examples/default-angu-bar.css">
     <link rel="stylesheet" href="/examples/style.css">
 </head>
@@ -91,8 +91,10 @@
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-<script src="dist/tek.progress-bar.min.js"></script>
-<script src="examples/mainController.js"></script>
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../src/progressBarModule.js"></script>
+<script src="../src/directives/progressBar.js"></script>
+<script src="../src/services/progressBarManager.js"></script>
+<script src="mainController.js"></script>
 </body>
 </html>
