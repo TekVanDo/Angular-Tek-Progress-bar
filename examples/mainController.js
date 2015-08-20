@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('test', ['Tek.progressBar']).controller('mainController', ['progressBarManager',
+    angular.module('test', ['Tek.progressBar','hljs']).controller('mainController', ['progressBarManager',
         function (progressBarManager) {
             var main = this;
 
