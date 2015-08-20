@@ -23,13 +23,13 @@ That's why i decided to combine the concepts of these two units, having reconsid
 
 **https://github.com/angular-ui/bootstrap**
 
-## Demo and docs
-**http://TekVanDo.github.io/tek-progress-bar**
+## Demo
+**http://tekvando.github.io/Angular-Tek-Progress-bar/**
 ## Installing
 
 Install through bower:
 ```
-bower install --save tek.angular-progress-bar
+bower install --save angular-tek-progress-bar
 ```
 
 Initialize the plugin by referencing the necessary files:
