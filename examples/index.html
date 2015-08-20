@@ -9,8 +9,8 @@
 </head>
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
-    <tek-progress-bar class="progress-xxs progress-loading progress-loading-fixed"
-                      manager="main.loadingBar"></tek-progress-bar>
+    <tek-progress-bar class="progress-xs progress-loading progress-loading-fixed"
+                      manager="main.bar"></tek-progress-bar>
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
@@ -35,12 +35,9 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="m-t-xs">Button options</h4>
+                    <h4 class="m-t-xs">Loading bar</h4>
 
                     <div>
-                        <tek-progress-bar class="progress-xxs progress-loading m-t-xs"
-                                          manager="main.bar"></tek-progress-bar>
-                        <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle</button>
                         <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
                         <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
                         <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
@@ -60,7 +57,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="m-t-xs">Button options</h4>
+                    <h4 class="m-t-xs">Somple bar</h4>
 
                     <div>
                         <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-danger"
@@ -73,10 +70,11 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="m-t-xs">Button options</h4>
-                    <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-success" ng-model="main.bar2ProgressVal"
+                    <h4 class="m-t-xs">Combined Bar</h4>
+                    <tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal"
                                       manager="main.bar2">{{main.bar2ProgressVal}}%
                     </tek-progress-bar>
+                    <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle ng-if</button>
                     <button class="btn btn-primary" ng-click="main.bar2.set(main.random())">setRand</button>
                     <button class="btn btn-primary" ng-click="main.bar2.reset()">reset</button>
                     <button class="btn btn-primary" ng-click="main.bar2.clear()">clear</button>
@@ -88,12 +86,6 @@
                     </button>
                     <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.bar2ProgressVal">
                     <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
-                </div>
-                <div class="col-md-12">
-                    html
-                    <code><tek-progress-bar class="m-tb-sm" bar-class="progress-bar-success" ng-model="main.bar2ProgressVal"
-                                            manager="main.bar2">{{main.bar2ProgressVal}}%
-                    </tek-progress-bar></code>
                 </div>
             </div>
         </div>

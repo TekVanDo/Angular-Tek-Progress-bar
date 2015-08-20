@@ -8,11 +8,9 @@
                 return Math.floor(Math.random() * 100);
             };
 
-            main.loadingBar = progressBarManager();
-
             main.bar = progressBarManager();
             main.valBar = 0;
-
+            main.isBar = true;
             main.bar1ProgressVal = 0;
             main.bar1 = progressBarManager();
 
