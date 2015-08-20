@@ -552,7 +552,7 @@ fieldset[disabled] .btn-black.active {
     float: left;
 }
 
-.title-text{
+a.title-text, a:hover.title-text, a:focus.title-text{
     color: #fff;
     text-decoration: none;
 }
