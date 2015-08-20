@@ -86,7 +86,6 @@
 
                     if (bar.manager) {
                         bar.manager._getDefer().resolve(facade);
-
                         $scope.$on('$destroy', function () {
                             bar.manager._updateDefer();
                         });
@@ -94,12 +93,10 @@
 
                     if (bar.ngModel !== undefined) {
                         $scope.$watch('bar.ngModel', function (newVal, oldVal) {
-                            if(newVal !== oldVal) {
-                                if(bar.manager) {
-                                    bar.manager._updateValue(newVal);
-                                }
-                                bar.progressObj.set(newVal);
+                            if (bar.manager) {
+                                bar.manager._updateValue(newVal);
                             }
+                            bar.progressObj.set(newVal);
                         });
                     }
                 };
