@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/examples/default-angu-bar.css">
-    <link rel="stylesheet" href="/examples/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.7/styles/default.min.css">
+    <link rel="stylesheet" href="examples/default-angu-bar.css">
+    <link rel="stylesheet" href="examples/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
@@ -14,13 +15,40 @@
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
-                <h1>angular-tek-progress-bar</h1>
+                <h1><a class="title-text" href="https://github.com/TekVanDo/Angular-Tek-Progress-bar">angular-tek-progress-bar</a></h1>
 
                 <p>AngularJS 1.2+ progress bar directive.</p>
             </div>
             <div class="bs-docs-social col-md-3">
                 <ul>
-
+                    <li class="github-btn">
+                        <a aria-label="Download TekVanDo/Angular-Tek-Progress-bar on GitHub"
+                           data-icon="octicon-cloud-download"
+                           href="https://github.com/TekVanDo/Angular-Tek-Progress-bar/archive/master.zip"
+                           class="github-button">Download</a>
+                    </li>
+                    <li class="github-btn">
+                        <a aria-label="Watch TekVanDo/Angular-Tek-Progress-bar on GitHub"
+                           data-count-aria-label="# watchers on GitHub"
+                           data-count-api="/repos/TekVanDo/Angular-Tek-Progress-bar#subscribers_count"
+                           data-count-href="/TekVanDo/Angular-Tek-Progress-bar/watchers"
+                           data-icon="octicon-eye" href="https://github.com/TekVanDo/Angular-Tek-Progress-bar"
+                           class="github-button">Watch</a>
+                    </li>
+                    <li class="github-btn">
+                        <a aria-label="Star TekVanDo/Angular-Tek-Progress-bar on GitHub"
+                           data-count-aria-label="# stargazers on GitHub"
+                           data-count-api="/repos/TekVanDo/Angular-Tek-Progress-bar#stargazers_count"
+                           data-count-href="/TekVanDo/Angular-Tek-Progress-bar/stargazers"
+                           data-icon="octicon-star"
+                           href="https://github.com/TekVanDo/Angular-Tek-Progress-bar"
+                           class="github-button">Star</a>
+                    </li>
+                    <li class="github-btn">
+                        <a aria-label="Follow @TekVanDo on GitHub" data-count-aria-label="# followers on GitHub"
+                           data-count-api="/users/TekVanDo#followers" data-count-href="/TekVanDo/followers"
+                           href="https://github.com/TekVanDo" class="github-button">Follow @TekVanDo</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -71,7 +99,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="m-t-xs">Combined Bar</h4>
-                    <tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal"
+                    <tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning"
+                                      ng-model="main.bar2ProgressVal"
                                       manager="main.bar2">{{main.bar2ProgressVal}}%
                     </tek-progress-bar>
                     <button class="btn btn-primary" ng-click="main.isBar = !main.isBar">toggle ng-if</button>
@@ -84,14 +113,23 @@
                     <button class="btn btn-primary" ng-click="main.bar2.setAnimation(!main.bar.isAnimated())">
                         toggleAnimation
                     </button>
-                    <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.bar2ProgressVal">
+                    <input type="number" class="form-manager" min="0" step="0.01" max="100"
+                           ng-model="main.bar2ProgressVal">
                     <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
                 </div>
+                <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning"
+                  ng-model="main.bar2ProgressVal"
+                  manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;%
+&lt;/tek-progress-bar&gt;</code></pre>
             </div>
         </div>
     </div>
 </div>
-<script src="../bower_components/angular/angular.js"></script>
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+<script src="//cdn.jsdelivr.net/highlight.js/8.7/highlight.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+<!--<script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>-->
+<script>hljs.initHighlightingOnLoad();</script>
 <script src="../src/progressBarModule.js"></script>
 <script src="../src/directives/progressBar.js"></script>
 <script src="../src/services/progressBarManager.js"></script>
