@@ -556,3 +556,12 @@ a.title-text, a:hover.title-text, a:focus.title-text{
     color: #fff;
     text-decoration: none;
 }
+
+.highlight {
+    background-color: #f6f6f8;
+    border: 1px solid #e2e2e9;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 14px;
+    padding: 9px 14px;
+}

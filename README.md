@@ -106,6 +106,9 @@ Html
 ## API
 
 ## tek-progress-bar directive
+
+Then value of progress-bar equal 0 it will be added class bar-empty
+Then value of progress-bar equal 100 it will be added class bar-full
 ```html
 <tek-progress-bar
 		manager="{object:progressBarManagerObject}"

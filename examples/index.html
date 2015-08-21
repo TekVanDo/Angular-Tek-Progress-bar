@@ -15,7 +15,8 @@
     <div class="call-out">
         <div class="container">
             <div class="col-md-9">
-                <h1><a class="title-text" href="https://github.com/TekVanDo/Angular-Tek-Progress-bar">angular-tek-progress-bar</a></h1>
+                <h1><a class="title-text" href="https://github.com/TekVanDo/Angular-Tek-Progress-bar">angular-tek-progress-bar</a>
+                </h1>
 
                 <p>AngularJS 1.2+ progress bar directive.</p>
             </div>
@@ -56,8 +57,6 @@
 </header>
 
 <div class="container">
-
-
     <div class="panel panel-default">
         <div class="panel-heading"><b>Demo</b></div>
         <div class="panel-body">
@@ -65,35 +64,65 @@
                 <div class="col-md-12">
                     <h4 class="m-t-xs">Loading bar</h4>
 
-                    <div>
-                        <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
-                        <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
-                        <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
-                        <button class="btn btn-primary" ng-click="main.bar.start()">start</button>
-                        <button class="btn btn-primary" ng-click="main.bar.stop()">stop</button>
-                        <button class="btn btn-primary" ng-click="main.bar.done()">done</button>
-                        <button class="btn btn-primary" ng-click="main.bar.setAnimation(!main.bar.isAnimated())">
-                            toggleAnimation
-                        </button>
-                        <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.valBar">
-                        <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
-                        <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
-                        <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
-                    </div>
+                    <button class="btn btn-primary" ng-click="main.bar.set(main.random())">setRand</button>
+                    <button class="btn btn-primary" ng-click="main.bar.reset()">reset</button>
+                    <button class="btn btn-primary" ng-click="main.bar.clear()">clear</button>
+                    <button class="btn btn-primary" ng-click="main.bar.start()">start</button>
+                    <button class="btn btn-primary" ng-click="main.bar.stop()">stop</button>
+                    <button class="btn btn-primary" ng-click="main.bar.done()">done</button>
+                    <button class="btn btn-primary" ng-click="main.bar.setAnimation(!main.bar.isAnimated())">
+                        toggleAnimation
+                    </button>
+                    <input type="number" class="form-manager" min="0" step="0.01" max="100" ng-model="main.valBar">
+                    <button class="btn btn-primary" ng-click="main.bar.increase()">Increase</button>
+                    <button class="btn btn-primary" ng-click="main.valBar = main.bar.get()">Get</button>
+                    <button class="btn btn-primary" ng-click="main.bar.set(main.valBar)">Set</button>
                 </div>
+
+                <div class="col-md-12">
+                    Js
+                    <div class="highlight">
+                <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
+    var main = this;
+    main.bar = progressBarManager();
+});</code></pre>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        Html
+                        <div class="highlight">
+                <pre><code class="html hljs">&lt;tek-progress-bar class="progress-xs progress-loading progress-loading-fixed" manager="main.bar"&gt;&lt;/tek-progress-bar&gt;</code></pre>
+                        </div>
+                    </div>
+
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="m-t-xs">Somple bar</h4>
 
-                    <div>
-                        <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-danger"
-                                          ng-model="main.bar1ProgressVal">
-                        </tek-progress-bar>
-                        <input type="number" min="0" step="0.01" max="100" ng-model="main.bar1ProgressVal">
+                    <tek-progress-bar class="m-tb-sm" bar-class="progress-bar-danger"
+                                      ng-model="main.bar1ProgressVal">
+                    </tek-progress-bar>
+                    progress-bar value <input type="number" min="0" step="0.01" max="100" ng-model="main.bar1ProgressVal">
+                </div>
+                <div class="col-md-12">
+                        Js
+                    <div class="highlight">
+                <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function () {
+    var main = this;
+    main.bar2ProgressVal = 0;
+});</code></pre>
                     </div>
                 </div>
+
+                    <div class="col-md-12">
+                        Html
+                        <div class="highlight">
+                <pre><code class="html hljs">&lt;tek-progress-bar class="m-tb-sm" bar-class="progress-bar-danger" ng-model="main.bar2ProgressVal"&gt;&lt;/tek-progress-bar&gt;</code></pre>
+                        </div>
+                    </div>
+
             </div>
 
             <div class="row">
@@ -117,14 +146,51 @@
                            ng-model="main.bar2ProgressVal">
                     <button class="btn btn-primary" ng-click="main.bar2.increase()">Increase</button>
                 </div>
-                <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning"
-                  ng-model="main.bar2ProgressVal"
+
+                <div class="col-md-12">
+                    Js
+                    <div class="highlight">
+                <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
+    var main = this;
+    main.isBar = true;
+    main.bar2ProgressVal = 0;
+    main.bar2 = progressBarManager();
+});</code></pre>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    Html
+                    <div class="highlight">
+                <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal"
                   manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;%
 &lt;/tek-progress-bar&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Download & install</b></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="center"><b>Method 1:</b> Install through bower:</p>
+                    <div class="highlight">
+                    <pre><code class="bash hljs">$ bower install angular-tek-progress-bar --save</code></pre>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <p class="center"><b>Method 2:</b> Download the angular-tek-progress-bar <strong>JavaScript</strong> files.</p>
+                    <a download="" href="https://github.com/TekVanDo/Angular-Tek-Progress-bar/archive/master.zip" class="btn btn-primary">Download files</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 <script src="//cdn.jsdelivr.net/highlight.js/8.7/highlight.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
