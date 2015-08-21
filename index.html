@@ -83,9 +83,9 @@
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
-                    var main = this;
-                    main.bar = progressBarManager();
-                    });</code></pre>
+    var main = this;
+    main.bar = progressBarManager();
+});</code></pre>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -110,9 +110,9 @@
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function () {
-                    var main = this;
-                    main.bar2ProgressVal = 0;
-                    });</code></pre>
+    var main = this;
+    main.bar2ProgressVal = 0;
+});</code></pre>
                     </div>
                 </div>
 
@@ -151,11 +151,11 @@
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
-                    var main = this;
-                    main.isBar = true;
-                    main.bar2ProgressVal = 0;
-                    main.bar2 = progressBarManager();
-                    });</code></pre>
+    var main = this;
+    main.isBar = true;
+    main.bar2ProgressVal = 0;
+    main.bar2 = progressBarManager();
+});</code></pre>
                     </div>
                 </div>
 
@@ -163,8 +163,8 @@
                     Html
                     <div class="highlight">
                 <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal"
-                    manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;%
-                    &lt;/tek-progress-bar&gt;</code></pre>
+                  manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;%
+&lt;/tek-progress-bar&gt;</code></pre>
                     </div>
                 </div>
             </div>
