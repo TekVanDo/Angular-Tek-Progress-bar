@@ -49,12 +49,13 @@
                 };
 
                 ProgressObj.prototype.updateClasses = function () {
-                    if (this.value === 0) {
+                    console.log(this.value);
+                    if (this.value <= 0) {
                         this.containerElement.removeClass(settings.fullClass);
                         return this.containerElement.addClass(settings.emptyClass);
                     }
 
-                    if (this.value === 100) {
+                    if (this.value >= 100) {
                         this.containerElement.removeClass(settings.emptyClass);
                         return this.containerElement.addClass(settings.fullClass);
                     }
@@ -96,7 +97,15 @@
                     }
 
                     if (bar.ngModel !== undefined) {
-                        $scope.$watch('bar.ngModel', function (newVal, oldVal) {
+                        $scope.$watch('bar.ngModel', function (newVal) {
+                            if(typeof newVal !== 'number' || newVal < 0 || newVal !== newVal){
+                                newVal = 0;
+                            }
+
+                            if(newVal > 100){
+                                newVal = 100;
+                            }
+
                             if (bar.manager) {
                                 bar.manager._updateValue(newVal);
                             }
