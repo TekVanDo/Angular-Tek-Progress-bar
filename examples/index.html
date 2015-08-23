@@ -5,8 +5,9 @@
     <title></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.7/styles/default.min.css">
-    <link rel="stylesheet" href="examples/default-angu-bar.css">
-    <link rel="stylesheet" href="examples/style.css">
+    <link rel="stylesheet" href="/examples/default-angu-bar.css">
+    <link rel="stylesheet" href="/examples/vertical-bar.css">
+    <link rel="stylesheet" href="/examples/style.css">
 </head>
 <body ng-app="test" ng-controller="mainController as main">
 <header class="marquee">
@@ -169,6 +170,18 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Vertical demo</b></div>
+        <div class="panel-body">
+            <div class="fixed-height-250">
+                <tek-progress-bar class="m-tb-sm" mode="vertical" bar-class="progress-bar-warning" ng-model="main.verticalbarVal"></tek-progress-bar>
+                progress-bar value <input type="number" min="0" step="0.01" max="100" ng-model="main.verticalbarVal">
+
+                <tek-progress-bar class="m-tb-sm bottom" mode="vertical" bar-class="progress-bar-warning" ng-model="main.verticalbarVal"></tek-progress-bar>
+            </div>
+         </div>
     </div>
 
     <div class="panel panel-default">

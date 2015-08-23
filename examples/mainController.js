@@ -16,6 +16,8 @@
 
             main.bar2ProgressVal = 0;
             main.bar2 = progressBarManager();
+
+            main.verticalbarVal = 0;
         }
     ]);
 }());

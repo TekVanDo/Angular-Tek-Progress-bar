@@ -1,74 +1,110 @@
 "use strict";
 describe('progressBar directive', function () {
-    var progressBar, progressBarWithModel, scope, compile, progressBarManager, $progressElement,
-        $barElement, $progressElementWithModel, $barElementWithModel;
+    var progressBar, progressBarWithModel, scope, compile, progressBarManager, verticalProgressBar;
 
     var bar = '<tek-progress-bar manager="bar"></tek-progress-bar>';
+    var verticalBar = '<tek-progress-bar mode="vertical" manager="verticalBar"></tek-progress-bar>';
     var barWithModel = '<tek-progress-bar ng-model="model"></tek-progress-bar>';
+
     beforeEach(function () {
         module('Tek.progressBar');
 
         inject(function ($compile, $rootScope, $injector) {
-            progressBarManager = $injector.get('progressBarManager')();
+            progressBarManager = $injector.get('progressBarManager');
             compile = $compile;
             scope = $rootScope.$new();
-            scope.bar = progressBarManager;
+            scope.bar = progressBarManager();
+            scope.verticalBar = progressBarManager();
             scope.model = 0;
         });
 
         progressBar = getCompiledElement(bar);
-        $progressElement = angular.element(progressBar.find('div')[0]);
-        $barElement = angular.element(progressBar.find('div')[1]);
-
+        verticalProgressBar = getCompiledElement(verticalBar);
         progressBarWithModel = getCompiledElement(barWithModel);
-        $progressElementWithModel = angular.element(progressBarWithModel.find('div')[0]);
-        $barElementWithModel = angular.element(progressBarWithModel.find('div')[1]);
     });
 
-    function getCompiledElement() {
-        var element = angular.element('<tek-progress-bar manager="bar"></tek-progress-bar>');
+    function getCompiledElement(Html) {
+        var element = angular.element(Html);
         var compiledElement = compile(element)(scope);
         scope.$digest();
-        return compiledElement;
+
+        return {
+            element: compiledElement,
+            progressElement: angular.element(compiledElement.find('div')[0]),
+            barElement: angular.element(compiledElement.find('div')[1])
+        };
     }
+
+    describe('Testing get method', function () {
+        it('Value should be 0', function () {
+            scope.bar.getPromise().then(function (obj) {
+                expect(obj.get()).toEqual(0);
+                expect(obj.get()).toEqual(scope.bar.get());
+            });
+        });
+
+        it('Value should be 70', function () {
+            scope.bar.set(70).getPromise().then(function (obj) {
+                expect(obj.get()).toEqual(70);
+                expect(obj.get()).toEqual(scope.bar.get());
+            });
+        });
+    });
 
     describe('Testing bar width', function () {
         it('Width should be 0', function () {
-            expect($barElement.css('width')).toEqual(0 + '%');
+            expect(progressBar.barElement.css('width')).toEqual(0 + '%');
         });
 
         it('Width should be 100', function () {
             scope.bar.done();
-            expect($barElement.css('width')).toEqual(100 + '%');
+            expect(progressBar.barElement.css('width')).toEqual(100 + '%');
         });
 
         it('Width should be 0', function () {
             scope.bar.done().clear();
-            expect($barElement.css('width')).toEqual(0 + '%');
+            expect(progressBar.barElement.css('width')).toEqual(0 + '%');
         });
     });
+
+    describe('Testing vertical mode', function () {
+        it('Height should be 0', function () {
+            expect(verticalProgressBar.barElement.css('height')).toEqual(0 + '%');
+        });
+
+        it('Height should be 100', function () {
+            scope.verticalBar.done();
+            expect(verticalProgressBar.barElement.css('height')).toEqual(100 + '%');
+        });
+
+        it('Height should be 0', function () {
+            scope.verticalBar .done().clear();
+            expect(verticalProgressBar.barElement.css('height')).toEqual(0 + '%');
+        });
+    });
+
     //
     //describe('Testing animation', function () { // todo rewrite
     //    it('It should has transition none', function () {
     //        scope.bar.setAnimation(false);
-    //        expect($barElement.css('transition')).toEqual('none');
+    //        expect(progressBar.barElement.css('transition')).toEqual('none');
     //    });
     //});
 
     describe('Testing class', function () {
         it('It should has empty class', function () {
-            expect($progressElement.hasClass('empty-bar')).toBeTruthy();
+            expect(progressBar.progressElement.hasClass('empty-bar')).toBeTruthy();
         });
 
         it('It should has empty class', function () {
             scope.bar.done();
-            expect($progressElement.hasClass('full-bar')).toBeTruthy();
+            expect(progressBar.progressElement.hasClass('full-bar')).toBeTruthy();
         });
 
         it('It should has not full-bar and empty-bar class', function () {
             scope.bar.set(50);
-            expect($progressElement.hasClass('full-bar')).toBeFalsy();
-            expect($progressElement.hasClass('empty-bar')).toBeFalsy();
+            expect(progressBar.progressElement.hasClass('full-bar')).toBeFalsy();
+            expect(progressBar.progressElement.hasClass('empty-bar')).toBeFalsy();
         });
     });
 

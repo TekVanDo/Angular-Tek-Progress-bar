@@ -565,3 +565,7 @@ a.title-text, a:hover.title-text, a:focus.title-text{
     margin-bottom: 14px;
     padding: 9px 14px;
 }
+
+.fixed-height-250 {
+    height: 250px;
+}
