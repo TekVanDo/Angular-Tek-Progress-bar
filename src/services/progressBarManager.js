@@ -12,7 +12,7 @@
     })();
 
     angular.module('Tek.progressBar').factory('progressBarManager', ['$q', function ($q) {
-        return function (defaultSettings) {
+        return function () {
             var deferred = $q.defer();
             var instance = null;
             var lastVal = 0;
@@ -119,7 +119,11 @@
                     return intervalCont.isInProgress();
                 },
                 increase: function (value) {
-                    (value) ? this.set(lastVal + value) : intervalCont.increment();
+                    if(typeof value === 'number' && value === value){
+                        this.set(lastVal + value);
+                    }else{
+                        intervalCont.increment();
+                    }
                     return this;
                 },
                 start: function () {
