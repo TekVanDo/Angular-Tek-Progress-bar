@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var karmaServer = require('karma').Server;
 var plugins = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
@@ -62,10 +63,20 @@ gulp.task('minify', function () {
 
 
 gulp.task('build', function (done) {
+    console.log('build');
     plugins.runSequence('clean', ['minify'], done);
 });
 
+gulp.task('test', function (done) {
+    return new karmaServer({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true
+    }, done).start();
+});
 
 gulp.task('default', function() {
-
+    plugins.runSequence('test', 'build');
+    //gulp.run('test').complete(function () {
+    //    gulp.run('build');
+    //});
 });
