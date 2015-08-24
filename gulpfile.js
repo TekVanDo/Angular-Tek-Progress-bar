@@ -79,5 +79,5 @@ gulp.task('test', function (done) {
 //});
 
 gulp.task('default', function() {
-    plugins.runSequence('test', 'build', 'coverage');
+    plugins.runSequence('test', 'build');
 });
