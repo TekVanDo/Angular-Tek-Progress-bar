@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/TekVanDo/Angular-Tek-Progress-bar.svg?branch=master)](https://travis-ci.org/TekVanDo/Angular-Tek-Progress-bar)
+
 Angular Tek Progress-bar
 ==========================
 angular-tek-progress-bar is an AngularJS module to create and controls progress bar.
