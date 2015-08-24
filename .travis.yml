@@ -1,8 +1,10 @@
+sudo: false
 language: node_js
 node_js:
-  - "0.10"
   - "0.12"
-  - "iojs"
+branches:
+  only:
+    - master
 before_script:
   - npm install -g bower
   - npm install -g gulp
