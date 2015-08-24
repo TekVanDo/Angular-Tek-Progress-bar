@@ -1,7 +1,7 @@
 {
-  "name": "progressBar",
-  "version": "0.0.1",
-  "description": "",
+  "name": "angular-tek-progress-bar",
+  "version": "0.1.0",
+  "description": "angular-tek-progress-bar is an AngularJS module to create and controls progress bar.",
   "main": "gulpfile.js",
   "directories": {
     "example": "examples"
@@ -27,7 +27,7 @@
     "jasmine-core": "^2.3.4",
     "karma": "^0.13.7",
     "karma-chrome-launcher": "^0.2.0",
-    "karma-coverage": "^0.4.2",
+    "karma-coverage": "^0.5.0",
     "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
@@ -36,6 +36,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Alexander Strochkov <tek@inbox.ru>",
+  "license": "MIT"
 }

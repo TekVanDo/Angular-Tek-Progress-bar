@@ -63,7 +63,6 @@ gulp.task('minify', function () {
 
 
 gulp.task('build', function (done) {
-    console.log('build');
     plugins.runSequence('clean', ['minify'], done);
 });
 
@@ -74,9 +73,11 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
+//gulp.task('coverage', function (done) {
+//    gulp.src('test/coverage/**/lcov.info')
+//        .pipe(plugins.coveralls());
+//});
+
 gulp.task('default', function() {
-    plugins.runSequence('test', 'build');
-    //gulp.run('test').complete(function () {
-    //    gulp.run('build');
-    //});
+    plugins.runSequence('test', 'build', 'coverage');
 });
