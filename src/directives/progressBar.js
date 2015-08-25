@@ -65,7 +65,11 @@
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {
-                    (val) ? this.barContainer.css('transition', '') : this.barContainer.css('transition', 'none');
+                    if(val === true){
+                        this.barContainer.css('transition', '');
+                    }else{
+                        this.barContainer.css('transition', 'none');
+                    }
                 };
 
                 bar.init = function () {
