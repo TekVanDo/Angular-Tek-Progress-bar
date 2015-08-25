@@ -73,11 +73,6 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
-//gulp.task('coverage', function (done) {
-//    gulp.src('test/coverage/**/lcov.info')
-//        .pipe(plugins.coveralls());
-//});
-
 gulp.task('default', function() {
     plugins.runSequence('test', 'build');
 });

@@ -1,6 +1,7 @@
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 [![Build Status](https://travis-ci.org/TekVanDo/Angular-Tek-Progress-bar.svg?branch=master)](https://travis-ci.org/TekVanDo/Angular-Tek-Progress-bar)
 [![Codacy Badge](https://www.codacy.com/project/badge/5debf758dc9742ab92c9cb800b2c0fe4)](https://www.codacy.com/app/tek/Angular-Tek-Progress-bar)
+[![Coverage Status](https://coveralls.io/repos/TekVanDo/Angular-Tek-Progress-bar/badge.svg?branch=master&service=github)](https://coveralls.io/github/TekVanDo/Angular-Tek-Progress-bar?branch=master)
 Angular Tek Progress-bar
 ==========================
 angular-tek-progress-bar is an AngularJS module to create and controls progress bar.
