@@ -79,6 +79,7 @@
                     deferred.promise.then(function (data) {
                         instance = data;
                         instance.set(lastVal);
+                        instance.setAnimation(animation);
                     });
                 },
                 _updateValue: function (val) {
@@ -168,9 +169,9 @@
                 },
                 setAnimation: function (val) {
                     animation = !!val;
-                    deferred.promise.then(function (data) {
-                        data.setAnimation(animation);
-                    });
+                    if(instance) {
+                        instance.setAnimation(animation);
+                    }
                     return this;
                 },
                 isAnimated: function () {
