@@ -73,10 +73,10 @@ describe('progressBar directive', function () {
     });
 
     describe('Testing animation', function () { // todo rewrite
-        it('It should has transition none', function () {
-            scope.bar.setAnimation(false);
-            expect(progressBar.barElement.css('transition')).toEqual('none');
-        });
+        //it('It should has transition none', function () {
+        //    scope.bar.setAnimation(false);
+        //    expect(progressBar.barElement.css('transition')).toEqual('none');
+        //});
 
         it('It should has transition none', function () {
             scope.bar.setAnimation(false).setAnimation(true);

@@ -169,9 +169,9 @@
                 },
                 setAnimation: function (val) {
                     animation = !!val;
-                    if(instance) {
-                        instance.setAnimation(animation);
-                    }
+                    deferred.promise.then(function (data) {
+                        data.setAnimation(animation);
+                    });
                     return this;
                 },
                 isAnimated: function () {
