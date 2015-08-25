@@ -1,6 +1,6 @@
 /**
  * angular-tek-progress-bar - angular-tek-progress-bar is an AngularJS module to create and controls progress bar.
- * @version v0.1.2
+ * @version v0.2.0
  * @link https://github.com/TekVanDo/Angular-Tek-Progress-bar
  * @license MIT
  */
