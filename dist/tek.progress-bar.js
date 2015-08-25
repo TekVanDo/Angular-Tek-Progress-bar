@@ -12,7 +12,8 @@
                 manager: "=",
                 containerClass: "@class",
                 barClass: "@",
-                ngModel: "="
+                ngModel: "=",
+                mode: '@'
             },
             restrict: "E",
             transclude: true,
@@ -24,12 +25,16 @@
 
                 var settings = {
                     fullClass: 'full-bar',
-                    emptyClass: 'empty-bar'
+                    emptyClass: 'empty-bar',
+                    verticalClass: 'vertical',
+                    horizontalClass: ''
                 };
 
-                function ProgressObj(element) {
+                function ProgressObj(element, mode) {
                     var divElements = element.find('div');
+                    this.mode = mode;
                     this.containerElement = angular.element(divElements[0]);
+                    this.containerElement.addClass(settings[mode + 'Class']);
                     this.barContainer = angular.element(divElements[1]);
                     this.value = 0;
                 }
@@ -40,17 +45,22 @@
 
                 ProgressObj.prototype.set = function (val) {
                     this.value = val;
-                    this.barContainer.css('width', val + '%');
+                    if(this.mode === 'horizontal'){
+                        this.barContainer.css('width', val + '%');
+                    }
+                    if(this.mode === 'vertical'){
+                        this.barContainer.css('height', val + '%');
+                    }
                     this.updateClasses();
                 };
 
                 ProgressObj.prototype.updateClasses = function () {
-                    if (this.value === 0) {
+                    if (this.value <= 0) {
                         this.containerElement.removeClass(settings.fullClass);
                         return this.containerElement.addClass(settings.emptyClass);
                     }
 
-                    if (this.value === 100) {
+                    if (this.value >= 100) {
                         this.containerElement.removeClass(settings.emptyClass);
                         return this.containerElement.addClass(settings.fullClass);
                     }
@@ -60,12 +70,16 @@
                 };
 
                 ProgressObj.prototype.setAnimation = function (val) {
-                    (val) ? this.barContainer.css('transition', '') : this.barContainer.css('transition', 'none');
+                    if(val === true){
+                        this.barContainer.css('transition', '');
+                    }else{
+                        this.barContainer.css('transition', 'none');
+                    }
                 };
 
                 bar.init = function () {
-                    bar.progressObj = new ProgressObj($element);
-
+                    bar.mode = (bar.mode === 'vertical') ? bar.mode : 'horizontal';
+                    bar.progressObj = new ProgressObj($element, bar.mode);
                     var facade = {
                         get: function () {
                             return bar.progressObj.get();
@@ -86,20 +100,25 @@
 
                     if (bar.manager) {
                         bar.manager._getDefer().resolve(facade);
-
                         $scope.$on('$destroy', function () {
                             bar.manager._updateDefer();
                         });
                     }
 
                     if (bar.ngModel !== undefined) {
-                        $scope.$watch('bar.ngModel', function (newVal, oldVal) {
-                            if(newVal !== oldVal) {
-                                if(bar.manager) {
-                                    bar.manager._updateValue(newVal);
-                                }
-                                bar.progressObj.set(newVal);
+                        $scope.$watch('bar.ngModel', function (newVal) {
+                            if(typeof newVal !== 'number' || newVal < 0 || newVal !== newVal){
+                                newVal = 0;
                             }
+
+                            if(newVal > 100){
+                                newVal = 100;
+                            }
+
+                            if (bar.manager) {
+                                bar.manager._updateValue(newVal);
+                            }
+                            bar.progressObj.set(newVal);
                         });
                     }
                 };
@@ -122,51 +141,51 @@
     })();
 
     angular.module('Tek.progressBar').factory('progressBarManager', ['$q', function ($q) {
-        return function (defaultSettings) {
+        return function (params) {
             var deferred = $q.defer();
             var instance = null;
             var lastVal = 0;
             var animation = true;
             var requiredClear = false;
 
-            var intervalCont = (function () {
-                var incrementStrategy = function (stat) {
-                    var rnd;
+            var settings = {
+                incrementSpeed: 300,
+                incrementStrategy: function (stat) {
+                    var rnd = 0;
                     if (stat >= 0 && stat < 25) {
-                        // Start out between 3 - 6% increments
                         rnd = (Math.random() * (5 - 3 + 1) + 3);
                     } else if (stat >= 25 && stat < 65) {
-                        // increment between 0 - 3%
                         rnd = (Math.random() * 3);
                     } else if (stat >= 65 && stat < 90) {
-                        // increment between 0 - 2%
                         rnd = (Math.random() * 2);
                     } else if (stat >= 90 && stat < 99) {
-                        // finally, increment it .5 %
                         rnd = 0.5;
-                    } else {
-                        // after 99%, don't increment:
-                        rnd = 0;
                     }
                     return Math.round((stat + rnd) * 100) / 100;
-                };
+                }
+            };
 
+            if(params) {
+                angular.extend(settings, params);
+            }
+
+            var intervalCont = (function () {
                 var interval = null;
                 return {
                     increment: function () {
-                        obj.set(incrementStrategy(lastVal));
+                        progressBarManager.set(settings.incrementStrategy(lastVal));
                     },
                     setInterval: function () {
                         var self = this;
                         if (requiredClear) {
                             requiredClear = false;
-                            obj.clear();
+                            progressBarManager.clear();
                         }
 
                         if (!interval) {
                             interval = setInterval(function () {
                                 self.increment();
-                            }, 300);
+                            }, settings.incrementSpeed);
                         }
                     },
                     clearInterval: function () {
@@ -179,7 +198,7 @@
                 };
             }());
 
-            var obj = {
+            var progressBarManager = {
                 _getDefer: function () {
                     return deferred;
                 },
@@ -189,6 +208,7 @@
                     deferred.promise.then(function (data) {
                         instance = data;
                         instance.set(lastVal);
+                        instance.setAnimation(animation);
                     });
                 },
                 _updateValue: function (val) {
@@ -210,7 +230,7 @@
                     }
                     lastVal = val;
 
-                    //todo rewrite
+                    //huck if need to clear before new set
                     if (requiredClear) {
                         requiredClear = false;
                         this.clear(val);
@@ -229,7 +249,11 @@
                     return intervalCont.isInProgress();
                 },
                 increase: function (value) {
-                    (value) ? this.set(lastVal + value) : intervalCont.increment();
+                    if(typeof value === 'number' && value === value){
+                        this.set(lastVal + value);
+                    }else{
+                        intervalCont.increment();
+                    }
                     return this;
                 },
                 start: function () {
@@ -284,9 +308,9 @@
                 }
             };
 
-            obj._updateDefer(0);
+            progressBarManager._updateDefer(0);
 
-            return obj;
+            return progressBarManager;
         }
     }]);
 }());

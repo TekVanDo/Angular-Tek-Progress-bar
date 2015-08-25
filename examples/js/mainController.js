@@ -1,6 +1,6 @@
 (function () {
     "use strict";
-    angular.module('test', ['Tek.progressBar','hljs']).controller('mainController', ['progressBarManager',
+    angular.module('test', ['Tek.progressBar']).controller('mainController', ['progressBarManager',
         function (progressBarManager) {
             var main = this;
 
@@ -16,6 +16,9 @@
 
             main.bar2ProgressVal = 0;
             main.bar2 = progressBarManager();
+            main.rightBar = progressBarManager();
+            main.vertical = progressBarManager();
+            main.verticalTop = progressBarManager();
         }
     ]);
 }());
