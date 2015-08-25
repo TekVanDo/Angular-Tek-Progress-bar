@@ -12,51 +12,51 @@
     })();
 
     angular.module('Tek.progressBar').factory('progressBarManager', ['$q', function ($q) {
-        return function () {
+        return function (params) {
             var deferred = $q.defer();
             var instance = null;
             var lastVal = 0;
             var animation = true;
             var requiredClear = false;
 
-            var intervalCont = (function () {
-                var incrementStrategy = function (stat) {
-                    var rnd;
+            var settings = {
+                incrementSpeed: 300,
+                incrementStrategy: function (stat) {
+                    var rnd = 0;
                     if (stat >= 0 && stat < 25) {
-                        // Start out between 3 - 6% increments
                         rnd = (Math.random() * (5 - 3 + 1) + 3);
                     } else if (stat >= 25 && stat < 65) {
-                        // increment between 0 - 3%
                         rnd = (Math.random() * 3);
                     } else if (stat >= 65 && stat < 90) {
-                        // increment between 0 - 2%
                         rnd = (Math.random() * 2);
                     } else if (stat >= 90 && stat < 99) {
-                        // finally, increment it .5 %
                         rnd = 0.5;
-                    } else {
-                        // after 99%, don't increment:
-                        rnd = 0;
                     }
                     return Math.round((stat + rnd) * 100) / 100;
-                };
+                }
+            };
 
+            if(params) {
+                angular.extend(settings, params);
+            }
+
+            var intervalCont = (function () {
                 var interval = null;
                 return {
                     increment: function () {
-                        obj.set(incrementStrategy(lastVal));
+                        progressBarManager.set(settings.incrementStrategy(lastVal));
                     },
                     setInterval: function () {
                         var self = this;
                         if (requiredClear) {
                             requiredClear = false;
-                            obj.clear();
+                            progressBarManager.clear();
                         }
 
                         if (!interval) {
                             interval = setInterval(function () {
                                 self.increment();
-                            }, 300);
+                            }, settings.incrementSpeed);
                         }
                     },
                     clearInterval: function () {
@@ -69,7 +69,7 @@
                 };
             }());
 
-            var obj = {
+            var progressBarManager = {
                 _getDefer: function () {
                     return deferred;
                 },
@@ -101,7 +101,7 @@
                     }
                     lastVal = val;
 
-                    //todo rewrite
+                    //huck if need to clear before new set
                     if (requiredClear) {
                         requiredClear = false;
                         this.clear(val);
@@ -179,9 +179,9 @@
                 }
             };
 
-            obj._updateDefer(0);
+            progressBarManager._updateDefer(0);
 
-            return obj;
+            return progressBarManager;
         }
     }]);
 }());

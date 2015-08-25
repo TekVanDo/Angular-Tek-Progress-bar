@@ -20,15 +20,13 @@ That's why i decided to combine the concepts of these two units, having reconsid
 * Can control css animation
 * By default fully comparable with bootstrap
 * Fully customizable wia css
-
-
-## Alternatives
-**https://github.com/PSDCoder/progress-bars**
-
-**https://github.com/angular-ui/bootstrap**
+* Can work without digest (if you do not use ng-model)
+* Has vertical mode
 
 ## Demo
+
 **http://tekvando.github.io/Angular-Tek-Progress-bar/**
+
 ## Installing
 
 Install through bower:
@@ -36,13 +34,15 @@ Install through bower:
 bower install --save angular-tek-progress-bar
 ```
 
+or [download](https://github.com/TekVanDo/Angular-Tek-Progress-bar/archive/master.zip)
+
 Initialize the plugin by referencing the necessary files:
 
 ```htm
 <script src="dist/tek.progress-bar.min.js"></script>
 ```
 
-if tou want you can youse my progress-bar css styles 
+if tou want you can use my progress-bar [styles](https://github.com/TekVanDo/Angular-Tek-Progress-bar/blob/master/examples/default-angular-bar.css) 
 
 Define module in your app:
 
@@ -56,9 +56,7 @@ angular.module('yourModule', ['Tek.progressBar'])
 
 Javascript
 ```js
-angular.module('yourModule').controller(function($scope){
-	$scope.progressVal = 0;
-});
+$scope.progressVal = 0;
 ```
 
 Html
@@ -72,14 +70,7 @@ Through progressBarManager you can reach advanced control on progress bar
 
 Javascript
 ```js
-angular.module('yourModule').controller(function($scope, progressBarManager){
-	$scope.progressManager = progressBarManager();
-    $scope.progressManager.set(50);
-    
-    setTimeout(function(){
-    	$scope.progressManager.clear(); // it will clear bar
-    }, 1000);
-});
+$scope.progressManager = progressBarManager();
 ```
 Html
 ```html
@@ -90,21 +81,31 @@ Html
 
 Javascript
 ```js
-angular.module('yourModule').controller(function($scope, progressBarManager){
-	$scope.progressManager = progressBarManager(); 
-    $scope.progressVal = 0;
-    $scope.progressManager.set(50); // it will change progressVal value
-    //it works in both directions
-    $scope.progressVal = 30; // $scope.progressManager.get() return 30
-    
-    setTimeout(function(){
-    	$scope.progressManager.clear(); // it will clear bar
-    }, 1000);
-});
+$scope.progressManager = progressBarManager(); 
+$scope.progressVal = 0;
 ```
 Html
 ```html
 <tek-progress-bar ng-model="progressVal" manager="progressManager"></tek-progress-bar>
+```
+
+**Vertical mode**
+required vertical class
+```js
+$scope.progressVal = 0;   
+```
+Html
+```html
+<tek-progress-bar mode="vertical" ng-model="progressVal""></tek-progress-bar>
+```
+Css
+```css
+.progress.vertical {
+    float: left;
+    height: 100%;
+    margin-right: 20px;
+    width: 20px;
+}
 ```
 
 ## API
@@ -115,10 +116,11 @@ Then value of progress-bar equal 0 it will be added class bar-empty
 Then value of progress-bar equal 100 it will be added class bar-full
 ```html
 <tek-progress-bar
-		manager="{object:progressBarManagerObject}"
-		class="{sting:progress-container-element-class}"
-		barClass="{sting:progress-bar-element-class}"
-		ng-model="{number:model}">
+	 manager="{object:progressBarManagerObject}"
+	 class="{sting:progress-container-element-class}"
+	 barClass="{sting:progress-bar-element-class}"
+	 mode="{string: 'horizontal or vertical'}"
+	 ng-model="{number:model}">
 </tek-progress-bar>
 ```
 
@@ -133,7 +135,13 @@ You can change it:
 $templateCache.put('Tek.progressBarDirective.html', "Your template");
 ```
 
-## progressBarManager 
+## progressBarManager({object:paramsObj}) 
+
+paramsObj: {
+	incrementSpeed: {number} - default 300
+	incrementStrategy: {function}
+}
+
 
 **How it works**
 
@@ -156,6 +164,11 @@ setAnimation| bool   | {this}                   | Set animation value           
 isAnimated  |        | {bool} 				    | indicate animation status                                                      |
 
 
+## Alternatives
+**https://github.com/PSDCoder/progress-bars**
+**https://github.com/angular-ui/bootstrap**
+
+
 ## License
 
 is under MIT license - **http://www.opensource.org/licenses/mit-license.php**
@@ -164,5 +177,7 @@ is under MIT license - **http://www.opensource.org/licenses/mit-license.php**
 
 * ```npm install``` to install development dependencies
 * ```gulp build``` to build minified demo in build
+* ```gulp serve``` to start build server
+* ```gulp test``` to run tests
 
 

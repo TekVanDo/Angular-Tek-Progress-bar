@@ -78,26 +78,7 @@
     background-color: #fff;
 }
 
-.progress .progressbar-back-text {
-    font-size: 12px;
-    height: 100%;
-    line-height: 20px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-}
-.progress .progressbar-front-text {
-    display: block;
-    font-size: 12px;
-    line-height: 20px;
-    text-align: center;
-    width: 100%;
-}
 .progress.right .progress-bar {
-    right: 0;
-}
-.progress.right .progressbar-front-text {
-    position: absolute;
     right: 0;
 }
 .progress.vertical {
@@ -109,10 +90,6 @@
 .progress.vertical.bottom {
     position: relative;
 }
-.progress.vertical.bottom .progressbar-front-textk {
-    bottom: 0;
-    position: absolute;
-}
 .progress.vertical .progress-bar {
     height: 0;
     transition: height 0.6s ease 0s;
@@ -122,14 +99,3 @@
     bottom: 0;
     position: absolute;
 }
-
-/*.empty-bar > .progress-bar{*/
-    /*opacity: 0;*/
-    /*transition: opacity 0.6s ease 0s;*/
-/*}*/
-
-.full-bar > .progress-bar{
-    background-color:#27c24c;
-    transition: background-color 0.6s ease 0s;
-}
-

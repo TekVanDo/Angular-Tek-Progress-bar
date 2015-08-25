@@ -16,8 +16,9 @@
 
             main.bar2ProgressVal = 0;
             main.bar2 = progressBarManager();
-
-            main.verticalbarVal = 0;
+            main.rightBar = progressBarManager();
+            main.vertical = progressBarManager();
+            main.verticalTop = progressBarManager();
         }
     ]);
 }());

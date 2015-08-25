@@ -1,3 +1,63 @@
+.bs-docs-nav {
+    background-color: #893231;
+    border-color: #4b1f1e;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+.navbar-fixed-top {
+    border-width: 0 0 1px;
+    top: 0;
+}
+
+.navbar-inverse{
+    border-radius: 0;
+}
+
+.bs-docs-nav .navbar-brand {
+    color: #fff;
+}
+
+.bs-header h1, .bs-header p {
+    margin-right: 300px;
+}
+.bs-header h1 {
+    font-size: 60px;
+    line-height: 1;
+}
+.bs-header h1 {
+    color: #fff;
+}
+
+.bs-docs-nav .navbar-nav > li > a {
+    color: #f9f1f1;
+    transition: color 0.15s linear 0s;
+}
+
+.bs-header {
+    font-size: 21px;
+    text-align: left;
+}
+.bs-header {
+    font-size: 16px;
+    padding: 30px 15px 40px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.bs-docs-home, .bs-header {
+    background: #b94846 url("../images/triangular-red.png") repeat scroll 0 0;
+    color: #fff;
+    padding-bottom: 20px;
+}
+
+.navbar-brand {
+    float: left;
+    font-size: 18px;
+    height: 50px;
+    line-height: 20px;
+    padding: 15px;
+}
+
 .btn {
     font-weight: 500;
     border-radius: 2px;
@@ -65,8 +125,8 @@ fieldset[disabled] .btn-default.active {
 
 .btn-primary {
     color: #ffffff !important;
-    background-color: #f98752;
-    border-color: #f98752;
+    background-color: #d9534f;
+    border-color: #d43f3a;
     border-radius: inherit;
 }
 
@@ -76,8 +136,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     color: #ffffff !important;
-    background-color: #ef6c00;
-    border-color: #ef6c00;
+    background-color: #c9302c !important;
+    border-color: #ac2925 !important;
 }
 
 .btn-primary:active,
@@ -525,8 +585,7 @@ fieldset[disabled] .btn-black.active {
 }
 
 .call-out {
-    background-color: #f98752;
-    background-size: cover;
+    background: #b94846 url("../images/triangular-red.png") repeat scroll 0 0;
     color: #fff;
     display: inline-block;
     font-size: 1.2em;
@@ -557,15 +616,65 @@ a.title-text, a:hover.title-text, a:focus.title-text{
     text-decoration: none;
 }
 
+.buttons-block {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
 .highlight {
-    background-color: #f6f6f8;
+    background-color: #a6a6a8;
     border: 1px solid #e2e2e9;
-    border-radius: 4px;
+    color: white;
     display: block;
     margin-bottom: 14px;
-    padding: 9px 14px;
+}
+
+pre {
+    border: 0 none;
+    margin: 0;
+    background: #242a3a none repeat scroll 0 0;
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 0;
+    display: block;
+    line-height: 1.42857;
+    padding: 9.5px;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+.bs-example::after {
+    color: #bbb;
+    content: "Example";
+    font-size: 12px;
+    font-weight: bold;
+    left: 15px;
+    letter-spacing: 1px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 15px;
+}
+
+.bs-example {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #fafafa;
+    border-color: #ddd;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 45px 15px 15px;
+    position: relative;
 }
 
 .fixed-height-250 {
     height: 250px;
+}
+
+.full-bar > .progress-bar{
+    background-color:#27c24c;
+    transition: background-color 0.6s ease 0s;
 }

@@ -49,7 +49,6 @@
                 };
 
                 ProgressObj.prototype.updateClasses = function () {
-                    console.log(this.value);
                     if (this.value <= 0) {
                         this.containerElement.removeClass(settings.fullClass);
                         return this.containerElement.addClass(settings.emptyClass);
