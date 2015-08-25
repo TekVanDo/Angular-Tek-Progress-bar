@@ -1,6 +1,6 @@
 {
   "name": "angular-tek-progress-bar",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "angular-tek-progress-bar is an AngularJS module to create and controls progress bar.",
   "homepage": "https://github.com/TekVanDo/Angular-Tek-Progress-bar",
   "main": "gulpfile.js",
