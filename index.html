@@ -113,8 +113,8 @@
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
-var main = this;
-main.bar = progressBarManager();
+    var main = this;
+    main.bar = progressBarManager();
 });</code></pre>
                     </div>
                 </div>
@@ -143,8 +143,8 @@ main.bar = progressBarManager();
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function () {
-var main = this;
-main.bar2ProgressVal = 0;
+    var main = this;
+    main.bar2ProgressVal = 0;
 });</code></pre>
                     </div>
                 </div>
@@ -188,10 +188,10 @@ main.bar2ProgressVal = 0;
                     Js
                     <div class="highlight">
                 <pre><code class="js hljs">angular.module('test', ['Tek.progressBar']).controller('mainController', function (progressBarManager) {
-var main = this;
-main.isBar = true;
-main.bar2ProgressVal = 0;
-main.bar2 = progressBarManager();
+    var main = this;
+    main.isBar = true;
+    main.bar2ProgressVal = 0;
+    main.bar2 = progressBarManager();
 });</code></pre>
                     </div>
                 </div>
@@ -199,10 +199,7 @@ main.bar2 = progressBarManager();
                 <div class="col-md-12">
                     Html
                     <div class="highlight">
-                <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal"
-manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;%
-&lt;/tek-progress-bar&gt;</code></pre>
-</div>
+                    <pre><code class="html hljs">&lt;tek-progress-bar ng-if="main.isBar" class="m-tb-sm" bar-class="progress-bar-warning" ng-model="main.bar2ProgressVal" manager="main.bar2"&gt;&#123;&#123;main.bar2ProgressVal&#125;&#125;% &lt;/tek-progress-bar&gt;</code></pre></div>
                 </div>
             </div>
         </div>
