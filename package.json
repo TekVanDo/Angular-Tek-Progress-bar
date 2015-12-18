@@ -3,14 +3,16 @@
   "version": "0.2.0",
   "description": "angular-tek-progress-bar is an AngularJS module to create and controls progress bar.",
   "homepage": "https://github.com/TekVanDo/Angular-Tek-Progress-bar",
-  "main": "gulpfile.js",
+  "main": "dist/tek.progress-bar.min.js",
+  "author": "Alexander Strochkov <tek@inbox.ru>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TekVanDo/Angular-Tek-Progress-bar.git"
+  },
   "directories": {
     "example": "examples"
   },
-  "dependencies": {
-    "gulp": "^3.9.0",
-    "karma": "^0.13.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "browser-sync": "^2.8.2",
     "gulp": "^3.9.0",
@@ -43,6 +45,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alexander Strochkov <tek@inbox.ru>",
   "license": "MIT"
 }

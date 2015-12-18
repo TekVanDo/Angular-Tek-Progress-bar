@@ -34,6 +34,12 @@ Install through bower:
 bower install --save angular-tek-progress-bar
 ```
 
+or via npm
+
+```
+npm install --save angular-tek-progress-bar
+```
+
 or [download](https://github.com/TekVanDo/Angular-Tek-Progress-bar/archive/master.zip)
 
 Initialize the plugin by referencing the necessary files:
