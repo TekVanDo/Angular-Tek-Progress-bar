@@ -5,6 +5,15 @@
   "homepage": "https://github.com/TekVanDo/Angular-Tek-Progress-bar",
   "main": "dist/tek.progress-bar.min.js",
   "author": "Alexander Strochkov <tek@inbox.ru>",
+  "keywords": [
+    "angular",
+    "progress",
+    "progress-bar",
+    "bar",
+    "loading",
+    "loader",
+    "bootstrap"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TekVanDo/Angular-Tek-Progress-bar.git"
